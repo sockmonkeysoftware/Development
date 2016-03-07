@@ -42,6 +42,8 @@
 		%end
 		</table>
 		<span><h2 id='userMessage' style="color:white;"></h2></span>
+		<span><h1 id='winMessage' style="color:white;"></h1></span>
+		<button onclick="win()">Check Answer</button>
 		</center>
 	</body>
 	<script>
@@ -57,6 +59,10 @@
 			document.getElementById('userMessage').innerHTML = "Whoops! Make sure you enter a valid digit 1-9!"
 			return false;
 		};
+	};
+	
+	function win() {
+		document.getElementById('winMessage').innerHTML = "You win!"
 	};
 	</script>
 
