@@ -30,7 +30,7 @@ class Cell:
 	#--------------------------------------------------------
 	def submitAnswer(self, answer):
 		if(self.mutable_):
-			self.answer_ = max(NONE, min(answer, 9))
+			self.answer_ = answer
 		return self.isCorrect()			
 
 	#--------------------------------------------------------
