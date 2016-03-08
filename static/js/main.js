@@ -1,31 +1,34 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
-	
-	$.ajax({
-		type: "POST",
-		url: "/update",
-		data : { 'id': cell_id, 'value': value },
-		success: function(results) {
-			console.log(results);
-			
-			if (results['correct'] === true) {
-				console.log("Correct Number!");
-				$('#'+cell_id).css('background-color', 'green');
+	if (value == "") {
+		$('#'+cell_id).css('background-color', 'white');
+	} else {
+		$.ajax({
+			type: "POST",
+			url: "/update",
+			data : { 'id': cell_id, 'value': value },
+			success: function(results) {
+				console.log(results);
+				
+				if (results['correct'] === true) {
+					console.log("Correct Number!");
+					$('#'+cell_id).css('background-color', 'green');
+				}
+				else if (results['correct'] === false) {
+					console.log("Incorrect Number!");
+					$('#'+cell_id).css('background-color', 'red');
+				}
+				
+				//if (results.length > 0) {
+				//} else {
+				//	$('#results').html('Something went terribly wrong! Please try again.')
+				//}
+			},
+			error: function(error) {
+				console.log(error)
 			}
-			else if (results['correct'] === false) {
-				console.log("Incorrect Number!");
-				$('#'+cell_id).css('background-color', 'red');
-			}
-			
-			//if (results.length > 0) {
-			//} else {
-			//	$('#results').html('Something went terribly wrong! Please try again.')
-			//}
-		},
-		error: function(error) {
-			console.log(error)
-		}
-	});
+		});
+	};
 };
 
 
