@@ -1,5 +1,5 @@
 from Board import Board
-import unittest, random
+import unittest, random, math
 
 
 class Test_Board(unittest.TestCase):
@@ -178,7 +178,41 @@ class Test_Board(unittest.TestCase):
 		self.assertEqual(self.board.isSolved(), 'Incorrect', "Perturbed complete board not found to be incorrect.")
 
 	#--------------------------------------------------------------------------------
-	def test_11_board_is_well_formed(self):
+	def test_11_board_is_valid(self):
+	#--------------------------------------------------------------------------------
+		# generate a totally clued-in board, which should be entirely correct.
+		test = Board(0)
+
+		self.assertEqual(test.isSolved(), 'Correct', 'Totally clued-in (solved) board is not correct')
+
+		# check row validity
+		for y in range(9):
+			self.assertTrue(test.isRowCorrect(y), "Row " + str(y) + " is invalid: " + str([cell.getAnswer() for cell in test.getRow(y)]))
+
+		# check column validity
+		for x in range(9):
+			self.assertTrue(test.isColumnCorrect(x), "Column " + str(x) + " is invalid: " + str([cell.getAnswer() for cell in test.getColumn(x)]))
+
+		# check block validity
+		for x in range(3):
+			for y in range(3):
+				self.assertTrue(test.isBlockCorrect(x, y), "Block at (" + str(x) + ", " + str(y) + ") is invalid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(x, y)]))
+
+		# randomly hide a cell
+		x = random.randint(0, 8)
+		y = random.randint(0, 8)
+		bx = math.floor(x / 3)
+		by = math.floor(y / 3)
+
+		test.getCell(x, y).hideAnswer()
+
+		# hidden (blank) cells shoud invalidate resident row, column and block
+		self.assertFalse(test.isRowCorrect(y), "Perturbed row " + str(y) + " is still valid: " + str([cell.getAnswer() for cell in test.getRow(y)]))
+		self.assertFalse(test.isColumnCorrect(x), "Perturbed column " + str(x) + " is still valid: " + str([cell.getAnswer() for cell in test.getColumn(x)]))
+		self.assertFalse(test.isBlockCorrect(bx, by), "Perturbed block at (" + str(bx) + ", " + str(by) + ") is still valid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(bx, by)]))
+
+	#--------------------------------------------------------------------------------
+	def test_12_board_is_well_formed(self):
 	#--------------------------------------------------------------------------------
 		pass
 

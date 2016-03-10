@@ -1,5 +1,5 @@
 from Cell import Cell
-import random
+import random, math
 
 #================================================================
 class Board:
@@ -11,7 +11,7 @@ class Board:
 	# * solutions : number of cells to leave as unsolved.
 	#--------------------------------------------------------
 	def __init__(self, solutions):
-		solutions = max(1, min(80, solutions))
+		solutions = max(0, min(81, solutions))
 
 		self.board_ = self.generate(solutions)
 		self.unsolved_ = solutions
@@ -46,13 +46,22 @@ class Board:
 		board = []
 		random.seed()
 
+		# for col is 0..8
+		#	((col + row_constant) % 9) + 1
+
+		# for row is 0..8
+		#	row_constant = ((row * 3) % 9) + floor(row / 3) 
+
 		# Generate each row
 		for row in range(0, 9):
 			board.append([])
 
 			# Generate each cell
 			for column in range(0, 9):
-				cell = Cell(random.randint(1, 9))
+				shift = ((row * 3) % 9) + math.floor(row / 3)
+				number = ((column + shift) % 9) + 1
+
+				cell = Cell(number)
 				board[row].append(cell)
 
 		# Randomly hide given solutions		
@@ -149,7 +158,17 @@ class Board:
 	# False otherwise.
 	#--------------------------------------------------------
 	def isRowCorrect(self, index):
-		return None
+		if index not in range(0, 9):
+			return None
+		else:		
+			numbers = [cell.getAnswer() for cell in self.getRow(index)]
+
+			if(None in numbers):
+				return False
+
+			numbers.sort()
+
+			return numbers == list(range(1, 10))
 
 	#--------------------------------------------------------
 	# - Is This Column Correctly Solved?
@@ -159,7 +178,17 @@ class Board:
 	# and False otherwise.
 	#--------------------------------------------------------
 	def isColumnCorrect(self, index):
-		return None
+		if index not in range(0, 9):
+			return None
+		else:		
+			numbers = [cell.getAnswer() for cell in self.getColumn(index)]
+
+			if None in numbers:
+				return False
+
+			numbers.sort()
+
+			return numbers == list(range(1, 10))
 
 	#--------------------------------------------------------
 	# - Is This Block Correctly Solved?
@@ -170,7 +199,17 @@ class Board:
 	# and False otherwise.
 	#--------------------------------------------------------
 	def isBlockCorrect(self, x, y):
-		return None
+		if x not in range(0, 3) or y not in range(0, 3):
+			return None
+		else:		
+			numbers = [cell.getAnswer() for row in self.getBlock(x, y) for cell in row]
+
+			if None in numbers:
+				return False
+
+			numbers.sort()
+
+			return numbers == list(range(1, 10))
 
 	#--------------------------------------------------------
 	# - Is the Puzzle Solved?
@@ -184,6 +223,26 @@ class Board:
 			return 'Incomplete'
 		else:
 			 return 'Incorrect' if self.incorrect_ > 0 else 'Correct'
+
+	#--------------------------------------------------------
+	# - Swap Rows
+	#--------------------------------------------------------
+	# * y1 : index of first row to be swapped
+	# * y2 : index of second row to be swapped
+	# Swaps the cells in rows at y1 and y2.
+	#--------------------------------------------------------
+	def swapRows(y1, y2):
+		return None
+
+	#--------------------------------------------------------
+	# - Swap Columns
+	#--------------------------------------------------------
+	# * x1 : index of first column to be swapped
+	# * x2 : index of second column to be swapped
+	# Swaps the cells in columns at x1 and x2.
+	#--------------------------------------------------------
+	def swapColumns(x1, x2):
+		return None
 
 # Members
 	board_ = []
