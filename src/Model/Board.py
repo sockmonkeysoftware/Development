@@ -46,12 +46,7 @@ class Board:
 		board = []
 		random.seed()
 
-		# for col is 0..8
-		#	((col + row_constant) % 9) + 1
-
-		# for row is 0..8
-		#	row_constant = ((row * 3) % 9) + floor(row / 3) 
-
+		# Generate base puzzle: known to be valid.
 		# Generate each row
 		for row in range(0, 9):
 			board.append([])
@@ -63,6 +58,16 @@ class Board:
 
 				cell = Cell(number)
 				board[row].append(cell)
+
+		# Randomly perturb the puzzle iteratively to generate a new puzzle
+		# Legal Transorfmations:
+		#--------------------------------------------------
+		#1. swap all cells across either diagonal
+		#2. swap regions (column/row triplets)
+		#3. rotate around 4th row/col: 1, 2, 3, 4, 5, 6, 7, 9 => 9, 8, 5, 4, 3, 6, 7, 2, 1
+		#4. swap rows/cols within region
+		#5. swap two specific digits
+		#6. puzzle rotate
 
 		# Randomly hide given solutions		
 		while solutions > 0:
@@ -223,6 +228,37 @@ class Board:
 			return 'Incomplete'
 		else:
 			 return 'Incorrect' if self.incorrect_ > 0 else 'Correct'
+
+	#--------------------------------------------------------
+	# - Is the Puzzle Valid?
+	#--------------------------------------------------------
+	# returns IF the sudoku is a valid board: no row, column
+	# or block contains two of the same number. 
+	#--------------------------------------------------------
+	def isValid(self):
+		for row in range(0, 9):
+			numbers = [cell.getSolution() for cell in self.getRow(row)]
+			numbers.sort()
+
+			if numbers != list(range(1, 10)):
+				return False
+
+		for column in range(0, 9):
+			numbers = [cell.getSolution() for cell in self.getColumn(column)]
+			numbers.sort()
+
+			if numbers != list(range(1, 10)):
+				return False
+		
+		for x in range(0, 3):
+			for y in range(0, 3):
+				numbers = [cell.getSolution() for row in self.getBlock(x, y) for cell in row]
+				numbers.sort()
+
+				if numbers != list(range(1, 10)):
+					return False
+
+		return True
 
 	#--------------------------------------------------------
 	# - Swap Rows

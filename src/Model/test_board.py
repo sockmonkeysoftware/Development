@@ -178,22 +178,22 @@ class Test_Board(unittest.TestCase):
 		self.assertEqual(self.board.isSolved(), 'Incorrect', "Perturbed complete board not found to be incorrect.")
 
 	#--------------------------------------------------------------------------------
-	def test_11_board_is_valid(self):
+	def test_11_board_correctness_checks_function_correctly(self):
 	#--------------------------------------------------------------------------------
 		# generate a totally clued-in board, which should be entirely correct.
 		test = Board(0)
 
 		self.assertEqual(test.isSolved(), 'Correct', 'Totally clued-in (solved) board is not correct')
 
-		# check row validity
+		# check row correctness
 		for y in range(9):
 			self.assertTrue(test.isRowCorrect(y), "Row " + str(y) + " is invalid: " + str([cell.getAnswer() for cell in test.getRow(y)]))
 
-		# check column validity
+		# check column correctness
 		for x in range(9):
 			self.assertTrue(test.isColumnCorrect(x), "Column " + str(x) + " is invalid: " + str([cell.getAnswer() for cell in test.getColumn(x)]))
 
-		# check block validity
+		# check block correctness
 		for x in range(3):
 			for y in range(3):
 				self.assertTrue(test.isBlockCorrect(x, y), "Block at (" + str(x) + ", " + str(y) + ") is invalid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(x, y)]))
@@ -206,13 +206,67 @@ class Test_Board(unittest.TestCase):
 
 		test.getCell(x, y).hideAnswer()
 
-		# hidden (blank) cells shoud invalidate resident row, column and block
+		# hidden (blank) cells should make the resident row, column and block incorrect
+		self.assertFalse(test.isRowCorrect(y), "Perturbed row " + str(y) + " is still valid: " + str([cell.getAnswer() for cell in test.getRow(y)]))
+		self.assertFalse(test.isColumnCorrect(x), "Perturbed column " + str(x) + " is still valid: " + str([cell.getAnswer() for cell in test.getColumn(x)]))
+		self.assertFalse(test.isBlockCorrect(bx, by), "Perturbed block at (" + str(bx) + ", " + str(by) + ") is still valid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(bx, by)]))
+
+		# Submit a bad answer
+		solution = test.getCell(x, y).getSolution()
+		incorrect = (solution + 5) % 9 + 1
+
+
+		test.submitAnswer(x, y, incorrect)
+
+		# Incorrect cells should make the resident row, column and block incorrect
 		self.assertFalse(test.isRowCorrect(y), "Perturbed row " + str(y) + " is still valid: " + str([cell.getAnswer() for cell in test.getRow(y)]))
 		self.assertFalse(test.isColumnCorrect(x), "Perturbed column " + str(x) + " is still valid: " + str([cell.getAnswer() for cell in test.getColumn(x)]))
 		self.assertFalse(test.isBlockCorrect(bx, by), "Perturbed block at (" + str(bx) + ", " + str(by) + ") is still valid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(bx, by)]))
 
 	#--------------------------------------------------------------------------------
-	def test_12_board_is_well_formed(self):
+	def test_12_board_validity_checks_function_correctly(self):
+	#--------------------------------------------------------------------------------
+		# generate a board, which should be entirely valid.
+		test = Board(0)
+
+		# check board validity
+		self.assertTrue(test.isValid(), "Board found to be invalid.")
+
+		# A board with two solution numbers in the same row should be invalid
+		memory = test.getCell(3, 4).solution_
+		test.getCell(3, 4).solution_ = test.getCell(7, 4).solution_
+
+		self.assertFalse(test.isValid(), "Board not properly invalidated on row: " + str([cell.getSolution() for cell in test.getRow(4)]))
+
+		# Replace valid value - should re-instate validity
+		test.getCell(3, 4).solution_ = memory
+
+		self.assertTrue(test.isValid(), "Board found to be invalid.")
+
+		# A board with two solution numbers in the same column should be invalid
+		memory = test.getCell(5, 4).solution_
+		test.getCell(5, 4).solution_ = test.getCell(1, 4).solution_
+
+		self.assertFalse(test.isValid(), "Board not properly invalidated on column: " + str([cell.getSolution() for cell in test.getColumn(5)]))
+
+		# Replace valid value - should re-instate validity
+		test.getCell(5, 4).solution_ = memory
+
+		self.assertTrue(test.isValid(), "Board found to be invalid.")
+
+		# A board with two solution numbers in the same block should be invalid
+		memory = test.getCell(5, 5).solution_
+		test.getCell(5, 5).solution_ = test.getCell(3, 4).solution_
+
+		self.assertFalse(test.isValid(), "Board not properly invalidated on block: " + str([cell.getSolution() for row in test.getBlock(1, 1) for cell in row]))
+
+		# Replace valid value - should re-instate validity
+		test.getCell(5, 5).solution_ = memory
+
+		self.assertTrue(test.isValid(), "Board found to be invalid.")
+
+	#--------------------------------------------------------------------------------
+	def test_13_board_is_well_formed(self):
 	#--------------------------------------------------------------------------------
 		pass
 
