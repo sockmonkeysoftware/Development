@@ -6,7 +6,7 @@ class Test_Board(unittest.TestCase):
 	board = None
 
 	def setUp(self):
-		self.board = Board(10)
+		self.board = Board(10, False)
 
 	def tearDown(self):
 		pass
@@ -178,10 +178,10 @@ class Test_Board(unittest.TestCase):
 		self.assertEqual(self.board.isSolved(), 'Incorrect', "Perturbed complete board not found to be incorrect.")
 
 	#--------------------------------------------------------------------------------
-	def test_11_board_correctness_checks_function_correctly(self):
+	def test_11_board_correctness_checks(self):
 	#--------------------------------------------------------------------------------
-		# generate a totally clued-in board, which should be entirely correct.
-		test = Board(0)
+		# generate a totally clued-in basic board (no transformations applied), which should be entirely correct.
+		test = Board(0, False)
 
 		self.assertEqual(test.isSolved(), 'Correct', 'Totally clued-in (solved) board is not correct')
 
@@ -224,10 +224,10 @@ class Test_Board(unittest.TestCase):
 		self.assertFalse(test.isBlockCorrect(bx, by), "Perturbed block at (" + str(bx) + ", " + str(by) + ") is still valid: " + str([[cell.getAnswer() for cell in row] for row in test.getBlock(bx, by)]))
 
 	#--------------------------------------------------------------------------------
-	def test_12_board_validity_checks_function_correctly(self):
+	def test_12_board_validity_checks(self):
 	#--------------------------------------------------------------------------------
-		# generate a board, which should be entirely valid.
-		test = Board(0)
+		# generate a totally clued-in basic board (no transformations applied), which should be entirely correct.
+		test = Board(0, False)
 
 		# check board validity
 		self.assertTrue(test.isValid(), "Board found to be invalid.")
@@ -266,7 +266,254 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Board found to be invalid.")
 
 	#--------------------------------------------------------------------------------
-	def test_13_board_is_well_formed(self):
+	def test_13_swap_columns(self):
+	#--------------------------------------------------------------------------------
+		test = Board(0, False)
+
+		x1 = random.randint(0, 4)
+		x2 = random.randint(5, 8)
+
+		col1 = [cell.getSolution() for cell in test.getColumn(x1)]
+		col2 = [cell.getSolution() for cell in test.getColumn(x2)]
+
+		# swap col1 and col2
+		test.swapColumns(x1, x2)
+
+		self.assertEqual(col1, [cell.getSolution() for cell in test.getColumn(x2)], "Swap of column: " + str(col1) + " and column 2: " + str(col2) + " failed.")
+		self.assertEqual(col2, [cell.getSolution() for cell in test.getColumn(x1)], "Swap of column: " + str(col1) + " and column 2: " + str(col2) + " failed.")
+
+		# swapping with out-of-range indices should result in None
+		self.assertEqual(test.swapColumns(3, -1), None, "Swapping columns 3 and -1 did not return None")
+		self.assertEqual(test.swapColumns(4, 9), None, "Swapping columns 4 and 9 did not return None")
+
+	#--------------------------------------------------------------------------------
+	def test_14_swap_rows(self):
+	#--------------------------------------------------------------------------------
+		test = Board(0, False)
+
+		y1 = random.randint(0, 4)
+		y2 = random.randint(5, 8)
+
+		row1 = [cell.getSolution() for cell in test.getRow(y1)]
+		row2 = [cell.getSolution() for cell in test.getRow(y2)]
+
+		# swap row1 and row2
+		test.swapRows(y1, y2)
+
+		self.assertEqual(row1, [cell.getSolution() for cell in test.getRow(y2)], "Swap of row: " + str(row1) + " and row 2: " + str(row2) + " failed.")
+		self.assertEqual(row2, [cell.getSolution() for cell in test.getRow(y1)], "Swap of row: " + str(row1) + " and row 2: " + str(row2) + " failed.")
+
+		# swapping with out-of-range indices should result in None
+		self.assertEqual(test.swapRows(3, -1), None, "Swapping row 3 and -1 did not return None")
+		self.assertEqual(test.swapRows(4, 9), None, "Swapping row 4 and 9 did not return None")
+
+	#--------------------------------------------------------------------------------
+	def test_15_swap_along_diagonals(self):
+	#--------------------------------------------------------------------------------
+		test1 = Board(0, False)
+		test2 = Board(0, False)
+		control = Board(0, False)
+	
+		test1.swapMajorDiagonal()
+
+		# Board should remain valid
+		self.assertTrue(test1.isValid(), "Board invalidated following swap along major diagonal.")
+
+		# Cells should match the originals which are diagonally across and equi-distant
+		# to the main diagonal.
+
+		for x in range(0, 9):
+			for y in range(0, 9):
+				self.assertEqual(control.getCell(x, y).getSolution(), test1.getCell(y, x).getSolution(), "Control cell (" + str(x) + ", " + str(y) + ") does not equate to cell (" + str(y) + ", " + str(x) + ") after major diagonal swap.")
+
+		test2.swapMinorDiagonal()
+
+		# Board should remain valid
+		self.assertTrue(test2.isValid(), "Board invalidated following swap along minor diagonal.")
+
+		# Cells should match the originals which are diagonally across and equi-distant
+		# to the minor diagonal.
+
+		for x in range(0, 9):
+			for y in range(0, 9):
+				self.assertEqual(control.getCell(x, y).getSolution(), test2.getCell(8 - y, 8 - x).getSolution(), "Control cell (" + str(x) + ", " + str(y) + ") does not equate to cell (" + str(8 - y) + ", " + str(8 - x) + ") after minor diagonal swap.")
+
+		# Swapping twice on the same diagonal should result in the original board.
+		test1.swapMajorDiagonal()
+		self.assertEqual(control.getRaw(), test1.getRaw(), "Swapping twice on the main diagonal caused an effective difference.")
+
+		test2.swapMinorDiagonal()
+		self.assertEqual(control.getRaw(), test2.getRaw(), "Swapping twice on the minor diagonal caused an effective difference.")
+
+	#--------------------------------------------------------------------------------
+	def test_16_swap_major_columns_of_blocks(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		x1 = random.randint(0, 1)
+		x2 = random.randint(x1+1, x1+2) % 3
+
+		test.swapBlockColumns(x1, x2)
+
+		# Swapping two columns of blocks should let the board remain valid.
+		self.assertTrue(test.isValid(), "Swapping major columns " + str(x1) + " and " + str(x2) + " invalidated the board.")
+
+		# Swapping major columns essentially keeps the blocks the same, but swaps their horizontal region.
+		for y in range(0, 3):
+			self.assertEqual([cell.getSolution() for row in control.getBlock(x1, y) for cell in row], [cell.getSolution() for row in test.getBlock(x2, y) for cell in row], "Control block at (" + str(x1) + ", " + str(y) + ") did not equate to block at (" + str(x2) + ", " + str(y) + ") after major column swap")
+
+		# Swapping twice on the same major columns should result in the original board.
+		test.swapBlockColumns(x2, x1)
+		self.assertEqual(control.getRaw(), test.getRaw(), "Swapping twice on the same major block columns caused an effective difference.")
+
+		# Swapping indices out of range should yield None
+		self.assertEqual(test.swapBlockColumns(-1, 1), None, "Swapping columns -1 and 1 did not return None")
+		self.assertEqual(test.swapBlockColumns(1, 3), None, "Swapping columns 1 and 3 did not return None")
+
+
+	#--------------------------------------------------------------------------------
+	def test_17_swap_major_rows_of_blocks(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		y1 = random.randint(0, 1)
+		y2 = random.randint(y1+1, y1+2) % 3
+
+		test.swapBlockRows(y1, y2)
+
+		# Swapping two rows of blocks should let the board remain valid.
+		self.assertTrue(test.isValid(), "Swapping major rows " + str(y1) + " and " + str(y2) + " invalidated the board.")
+
+		# Swapping major rows essentially keeps the blocks the same, but swaps their vertical region.
+		for x in range(0, 3):
+			self.assertEqual([cell.getSolution() for row in control.getBlock(x, y1) for cell in row], [cell.getSolution() for row in test.getBlock(x, y2) for cell in row], "Control block at (" + str(x) + ", " + str(y1) + ") did not equate to block at (" + str(x) + ", " + str(y2) + ") after major row swap")
+
+		# Swapping twice on the same minor rows should result in the original board.
+		test.swapBlockRows(y2, y1)
+		self.assertEqual(control.getRaw(), test.getRaw(), "Swapping twice on the same major block rows caused an effective difference.")
+
+		# Swapping indices out of range should yield None
+		self.assertEqual(test.swapBlockRows(-1, 1), None, "Swapping rows -1 and 1 did not return None")
+		self.assertEqual(test.swapBlockRows(1, 3), None, "Swapping rows 1 and 3 did not return None")
+
+	#--------------------------------------------------------------------------------
+	def test_18_swap_unique_digits(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		a = random.randint(1, 4)
+		b = random.randint(5, 9)
+
+		test.swapDigits(a, b)
+
+		# Swapping all instances of two specific digits should retain board validity.
+		self.assertTrue(test.isValid(), "Swapping digits " + str(a) + " and " + str(b) + " invalidated the board.")
+		
+		# After swapping, any cell which was 'a' should now be 'b', and vice-versa.
+		for x in range(0, 9):
+			for y in range(0, 9):
+				if control.getCell(x, y).getSolution() == a:
+					self.assertEqual(test.getCell(x, y).getSolution(), b, "Control cell (" + str(x) + ", " + str(y) + ") => " + str(a) + ", but test cell is " + str(control.getCell(x, y).getSolution()) + " after swapping digits " + str(a) + " and " + str(b))
+
+		# Swapping twice on the same two digits should result in the original board.
+		test.swapDigits(a, b)
+		self.assertEqual(control.getRaw(), test.getRaw(), "Swapping twice on the same digits caused an effective difference.")
+
+	#--------------------------------------------------------------------------------
+	def test_19_flip_board_horizontally(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		test.flipHorizontal()
+
+		# Flipped board should retain validity.
+		self.assertTrue(test.isValid(), "Flipping board horizontally invalidated it.")
+
+		# First column of flipped board should be same as last of original. 2nd same as 8th, etc.
+		for x in range(0, 9):
+			self.assertEqual([cell.getSolution() for cell in control.getColumn(x)], [cell.getSolution() for cell in test.getColumn(8 - x)], "Control column " + str(x) + " did not equate to column " + str(8 - x) + " after flipping horizontally")
+		
+		# Flipping the board horizontally twice should result in the original board.
+		test.flipHorizontal()
+		self.assertEqual(control.getRaw(), test.getRaw(), "Flipping horizontally twice caused an effective difference.")
+
+	#--------------------------------------------------------------------------------
+	def test_20_flip_board_vertically(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		test.flipVertical()
+
+		# Flipped board should retain validity.
+		self.assertTrue(test.isValid(), "Flipping board vertically invalidated it.")
+
+		# First row of flipped board should be same as last of original. 2nd same as 8th, etc.
+		for y in range(0, 9):
+			self.assertEqual([cell.getSolution() for cell in control.getRow(y)], [cell.getSolution() for cell in test.getRow(8 - y)], "Control row " + str(y) + " did not equate to row " + str(8 - y) + " after flipping vertically")
+		
+		# Flipping the board vertically twice should result in the original board.
+		test.flipVertical()
+		self.assertEqual(control.getRaw(), test.getRaw(), "Flipping vertically twice caused an effective difference.")
+
+	#--------------------------------------------------------------------------------
+	def test_21_swapping_regional_columns_retains_validity(self):
+	#--------------------------------------------------------------------------------
+		test = Board(0, False)
+
+		for i in range(0, 20):
+			x = random.randint(0, 2)
+			c1 = random.randint(0, 1)
+			c2 = random.randint(c1+1, c1+2) % 3
+
+			test.swapColumns(x * 3 + c1, x * 3 + c2)
+		
+			# Swapping two columns in the same major block column should retain validity
+			self.assertTrue(test.isValid(), "Swapping columns " + str(x * 3 + c1) + " and " + str(x * 3 + c2) + " within region " + str(x) + " invalidated the board.")
+
+	#--------------------------------------------------------------------------------
+	def test_22_swapping_regional_rows_retains_validity(self):
+	#--------------------------------------------------------------------------------
+		test = Board(0, False)
+
+		for i in range(0, 20):
+			y = random.randint(0, 2)
+			r1 = random.randint(0, 1)
+			r2 = random.randint(r1+1, r1+2) % 3
+
+			test.swapRows(y * 3 + r1, y * 3 + r2)
+		
+			# Swapping two rows in the same major block row should retain validity
+			self.assertTrue(test.isValid(), "Swapping row " + str(y * 3 + r1) + " and " + str(y * 3 + r2) + " within region " + str(y) + " invalidated the board.")
+
+	#--------------------------------------------------------------------------------
+	def test_23_rotate_board_clockwise(self):
+	#--------------------------------------------------------------------------------
+		control = Board(0, False)
+		test = Board(0, False)
+
+		test.rotate()
+
+		# Rotated board should retain validity.
+		self.assertTrue(test.isValid(), "Rotating board clockwise invalidated it.")
+
+		# Cell at (x, y) should now be at (8 - y, x) in the clockwise rotated board.
+		for y in range(0, 9):
+			for x in range(0, 8 - y):
+				self.assertEqual(control.getCell(x, y).getSolution(), test.getCell(8 - y, x).getSolution(), "Control cell (" + str(x) +", " + str(y) + ") did not equate to cell (" + str(8 - y) + ", " + str(x) + ") after clockwise rotation.")
+
+		# Rotating the board 360 degrees should result in the original board.
+		test.rotate()
+		test.rotate()
+		test.rotate()
+		self.assertEqual(control.getRaw(), test.getRaw(), "Rotating the board 360 degrees caused an effective difference.")
+
+	#--------------------------------------------------------------------------------
+	def test_xx_board_is_well_formed(self):
 	#--------------------------------------------------------------------------------
 		pass
 

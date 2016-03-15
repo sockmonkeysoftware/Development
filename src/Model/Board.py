@@ -9,11 +9,12 @@ class Board:
 	# - Board Constuctor
 	#--------------------------------------------------------
 	# * solutions : number of cells to leave as unsolved.
+	# * basicOnly : whether to apply random transformations.
 	#--------------------------------------------------------
-	def __init__(self, solutions):
+	def __init__(self, solutions, randomize = True):
 		solutions = max(0, min(81, solutions))
 
-		self.board_ = self.generate(solutions)
+		self.board_ = self.generate(solutions, randomize)
 		self.unsolved_ = solutions
 		self.incorrect_ = solutions
 
@@ -25,24 +26,17 @@ class Board:
 	# currently unsolved cell.
 	#--------------------------------------------------------
 	def getRaw(self):
-		answers = []
-
-		for row in range(0, 9):
-			answers.append([])
-
-			for column in range(0, 9):
-				answers[row].append(self.board_[row][column].getAnswer())
-
-		return answers
+		return [[cell.getAnswer() for cell in row] for row in self.board_]
 
 	#--------------------------------------------------------
 	# - Generate Game Board
 	#--------------------------------------------------------
 	# * solutions : number of cells to leave as unsolved.
+	# * basicOnly : whether to apply random transformations.
 	# creates a valid Sudoku board with some cells left
 	# unsolved and mutable, and the rest answered.
 	#--------------------------------------------------------
-	def generate(self, solutions):
+	def generate(self, solutions, randomize):
 		board = []
 		random.seed()
 
@@ -59,15 +53,18 @@ class Board:
 				cell = Cell(number)
 				board[row].append(cell)
 
-		# Randomly perturb the puzzle iteratively to generate a new puzzle
-		# Legal Transorfmations:
-		#--------------------------------------------------
-		#1. swap all cells across either diagonal
-		#2. swap regions (column/row triplets)
-		#3. rotate around 4th row/col: 1, 2, 3, 4, 5, 6, 7, 9 => 9, 8, 5, 4, 3, 6, 7, 2, 1
-		#4. swap rows/cols within region
-		#5. swap two specific digits
-		#6. puzzle rotate
+		if randomize:
+			# Randomly perturb the puzzle iteratively to generate a new puzzle
+			# Legal Transorfmations:
+			#--------------------------------------------------
+			#1. swap all cells across either diagonal
+			#2. swap regions (column/row triplets)
+			#3. rotate around 4th row/col: 1, 2, 3, 4, 5, 6, 7, 9 => 9, 8, 5, 4, 3, 6, 7, 2, 1
+			#4. swap rows/cols within region
+			#5. swap two specific digits
+			#6. puzzle rotate
+
+			pass
 
 		# Randomly hide given solutions		
 		while solutions > 0:
@@ -79,6 +76,20 @@ class Board:
 				solutions -= 1
 
 		return board
+
+	#--------------------------------------------------------
+	# - Print Board
+	#--------------------------------------------------------
+	# Outputs the current board's answer state to console.
+	#--------------------------------------------------------
+	def print(self):
+		print()
+		print(".-------------------------.")
+		for row in self.getRaw():
+			print(row)
+
+		print("'-------------------------'")
+		print()
 
 	#--------------------------------------------------------
 	# - Get Row
@@ -198,8 +209,8 @@ class Board:
 	#--------------------------------------------------------
 	# - Is This Block Correctly Solved?
 	#--------------------------------------------------------
-	# * x : the major column, counting left to right
-	# * y : the major row, counting top to bottom
+	# * x : the major column, counting left to right (0~2)
+	# * y : the major row, counting top to bottom (0~2)
 	# returns True if each number in the 3x3 block is unique,
 	# and False otherwise.
 	#--------------------------------------------------------
@@ -263,24 +274,151 @@ class Board:
 	#--------------------------------------------------------
 	# - Swap Rows
 	#--------------------------------------------------------
-	# * y1 : index of first row to be swapped
-	# * y2 : index of second row to be swapped
+	# * y1 : index of first row to be swapped (0~8)
+	# * y2 : index of second row to be swapped (0~8)
 	# Swaps the cells in rows at y1 and y2.
 	#--------------------------------------------------------
-	def swapRows(y1, y2):
-		return None
+	def swapRows(self, y1, y2):
+		if y1 not in range(0, 9) or y2 not in range(0, 9):
+			return None
+		elif y1 is not y2:
+			self.board_[y1], self.board_[y2] = self.board_[y2], self.board_[y1]
 
 	#--------------------------------------------------------
 	# - Swap Columns
 	#--------------------------------------------------------
-	# * x1 : index of first column to be swapped
-	# * x2 : index of second column to be swapped
+	# * x1 : index of first column to be swapped (0~8)
+	# * x2 : index of second column to be swapped (0~8)
 	# Swaps the cells in columns at x1 and x2.
 	#--------------------------------------------------------
-	def swapColumns(x1, x2):
+	def swapColumns(self, x1, x2):
+		if x1 not in range(0, 9) or x2 not in range(0, 9):
+			return None
+		elif x1 is not x2:
+			for y in range(0, 9):
+				self.board_[y][x1], self.board_[y][x2] = self.board_[y][x2], self.board_[y][x1]
+
+	#--------------------------------------------------------
+	# - Swap Cells Along Minor Diagonal
+	#--------------------------------------------------------
+	# Swaps the all cells along the minor diagonal, from the
+	# bottom-left to the top-right corner.
+	#--------------------------------------------------------
+	def swapMinorDiagonal(self):
+		for x in range(0, 9):
+			for y in range(0, 9):
+				if x + y < 9:
+					self.board_[y][x], self.board_[8 - x][8 - y] = self.board_[8 - x][8 - y], self.board_[y][x]
+		
+	#--------------------------------------------------------
+	# - Swap Cells Along Major Diagonal
+	#--------------------------------------------------------
+	# Swaps the all cells along the major diagonal, from the
+	# top-left to the bottom-right corner.
+	#--------------------------------------------------------
+	def swapMajorDiagonal(self):
+		for x in range(0, 9):
+			for y in range(0, 9):
+				if x > y:
+					self.board_[y][x], self.board_[x][y] = self.board_[x][y], self.board_[y][x]
+
+	#--------------------------------------------------------
+	# - Swap Columns of Blocks
+	#--------------------------------------------------------
+	# * x1 index of first block column to be swapped (0~2)
+	# * x2 index of second block column to be swapped (0~2)
+	# Swaps two major columns of blocks.
+	#--------------------------------------------------------
+	def swapBlockColumns(self, x1, x2):
+		if x1 not in range(0, 3) or x2 not in range(0, 3):
+			return None
+
+		if x1 != x2:
+			for x in range(0, 3):
+				self.swapColumns(x1 * 3 + x, x2 * 3 + x)
+
+	#--------------------------------------------------------
+	# - Swap Rows of Blocks
+	#--------------------------------------------------------
+	# * y1 index of first block row to be swapped (0~2)
+	# * y2 index of second block row to be swapped (0~2)
+	# Swaps two major rows of blocks.
+	#--------------------------------------------------------
+	def swapBlockRows(self, y1, y2):
+		if y1 not in range(0, 3) or y2 not in range(0, 3):
+			return None
+
+		if y1 != y2:
+			for y in range(0, 3):
+				self.swapRows(y1 * 3 + y, y2 * 3 + y)
+
+	#--------------------------------------------------------
+	# - Swap Digits
+	#--------------------------------------------------------
+	# * a the first unique digit to be swapped (1~9)
+	# * b the second unique digit to be swapped (1~9)
+	# Swaps all instances of a digit with all instances of
+	# another.
+	#--------------------------------------------------------
+	def swapDigits(self, a, b):
+		if a in range(1, 10) and b in range(1, 10) and a != b:
+			for x in range(0, 9):
+				for y in range(0, 9):
+					if self.board_[y][x].getSolution() == a:
+						self.board_[y][x].solution_ = b
+						self.board_[y][x].answer_ = b
+					elif self.board_[y][x].getSolution() == b:
+						self.board_[y][x].solution_ = a
+						self.board_[y][x].answer_ = a
+
+	#--------------------------------------------------------
+	# - Flip Horizontally
+	#--------------------------------------------------------
+	# Flips the board horizontally: 1st column swaps with 9th
+	# 2nd with 8th, and so on.
+	#--------------------------------------------------------
+	def flipHorizontal(self):
+		for x in range(0, 4):
+			self.swapColumns(x, 8 - x)
+
+	#--------------------------------------------------------
+	# - Flip Vertically
+	#--------------------------------------------------------
+	# Flips the board vertically: 1st row swaps with 9th, 2nd
+	# with 8th, and so on.
+	#--------------------------------------------------------
+	def flipVertical(self):
+		for y in range(0, 4):
+			self.swapRows(y, 8 - y)
+
+	#--------------------------------------------------------
+	# - Rotate Clockwise
+	#--------------------------------------------------------
+	# Rotates the board grid-wise in a clockwise direction
+	#--------------------------------------------------------
+	def rotate(self):
+		self.board_ = [self.getColumn(x)[::-1] for x in range(0, 9)]		
+
+	#--------------------------------------------------------
+	# - Perturb
+	#--------------------------------------------------------
+	# Initiates a random transformation on the board with
+	# random parameters that retains the board's validity.
+	# Possible transformations are:
+	#	- Swap along major/minor diagonal
+	#	- Swap two random regional columns/rows of blocks
+	#	- Swap two random major block columns/rows
+	#	- Swap two random unique digits
+	#	- Rotate the board clock-wise
+	#	- Flip the board horizontally/vertically
+	# Returns a string indicating the transformation executed
+	# and its parameters.
+	#--------------------------------------------------------
+	def perturb(self):
 		return None
 
 # Members
 	board_ = []
 	unsolved_ = 0
+	incorret_ = 0
 #================================================================
