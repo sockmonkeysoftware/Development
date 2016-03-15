@@ -7,6 +7,7 @@
 		href="../css/skeleton.css" /> -->
 		<link rel="stylesheet" type="text/css" media="screen"
 		href="../css/style.css" />
+		
 		<title></title>
 	</head>
 	<body>
@@ -33,7 +34,7 @@
 					name={{id}}
 					id={{id}} 
 					maxlength="1" size="1"
-					onchange="printChange(this.id, this.value)"
+					onchange="updateCellValue(this.id, this.value)"
 					onkeypress="return validateInput(event)"
 					/>
 					</div></td>
@@ -43,9 +44,18 @@
 		</table>
 		<span><h2 id='userMessage' style="color:white;"></h2></span>
 		<span><h1 id='winMessage' style="color:white;"></h1></span>
-		<button onclick="win()">Check Answer</button>
+		
+		
+		<form role="form" method="post" onsubmit="return false;">
+			<button type="submit">Check Answer</button>
+		</form>
+		
 		</center>
 	</body>
+	
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../js/main.js"></script>
+	
 	<script>
 	function printChange(id, value) {
 		console.log(id, value);
