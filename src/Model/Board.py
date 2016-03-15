@@ -42,11 +42,11 @@ class Board:
 
 		# Generate base puzzle: known to be valid.
 		# Generate each row
-		for row in range(0, 9):
+		for row in range(9):
 			self.board_.append([])
 
 			# Generate each cell
-			for column in range(0, 9):
+			for column in range(9):
 				shift = ((row * 3) % 9) + math.floor(row / 3)
 				number = ((column + shift) % 9) + 1
 
@@ -59,7 +59,7 @@ class Board:
 				self.perturb()
 
 		# Randomly hide given solutions
-		hidden = random.sample(range(0, 81), solutions)
+		hidden = random.sample(range(81), solutions)
 		
 		for index in hidden:
 			row = math.floor(index / 9)
@@ -89,7 +89,7 @@ class Board:
 	# In a correct solution, each number should be unique.
 	#--------------------------------------------------------
 	def getRow(self, index):
-		if index not in range(0, 9):
+		if index not in range(9):
 			return None
 		else:
 			return self.board_[index]
@@ -102,10 +102,10 @@ class Board:
 	# In a correct solution, each number should be unique.
 	#--------------------------------------------------------
 	def getColumn(self, index):
-		if index not in range(0, 9):
+		if index not in range(9):
 			return None
 		else:
-			return [self.board_[row][index] for row in range(0, 9)]
+			return [self.board_[row][index] for row in range(9)]
 
 	#--------------------------------------------------------
 	# - Get 3x3 Block
@@ -116,10 +116,10 @@ class Board:
 	# In a correct solution, each number should be unique.
 	#--------------------------------------------------------
 	def getBlock(self, x, y):
-		if x not in range(0, 3) or y not in range(0, 3):
+		if x not in range(3) or y not in range(3):
 			return None
 		else:
-			return [self.board_[row + y * 3][3 * x : 3 * x + 3] for row in range(0, 3)]
+			return [self.board_[row + y * 3][3 * x : 3 * x + 3] for row in range(3)]
 
 	#--------------------------------------------------------
 	# - Get Individual Cell
@@ -129,7 +129,7 @@ class Board:
 	# returns the exact Cell located at (x, y)
 	#--------------------------------------------------------
 	def getCell(self, x, y):
-		if x not in range(0, 9) or y not in range(0, 9):
+		if x not in range(9) or y not in range(9):
 			return None
 		else:
 			return self.board_[y][x]
@@ -146,7 +146,7 @@ class Board:
 	# returns True if the user's guess was correct.
 	#--------------------------------------------------------
 	def submitAnswer(self, x, y, answer):
-		if x not in range(0, 9) or y not in range(0, 9) or answer not in range(1, 10):
+		if x not in range(9) or y not in range(9) or answer not in range(1, 10):
 			return None
 		else:
 			self.unsolved_ -= 1
@@ -164,7 +164,7 @@ class Board:
 	# False otherwise.
 	#--------------------------------------------------------
 	def isRowCorrect(self, index):
-		if index not in range(0, 9):
+		if index not in range(9):
 			return None
 		else:		
 			numbers = [cell.getAnswer() for cell in self.getRow(index)]
@@ -184,7 +184,7 @@ class Board:
 	# and False otherwise.
 	#--------------------------------------------------------
 	def isColumnCorrect(self, index):
-		if index not in range(0, 9):
+		if index not in range(9):
 			return None
 		else:		
 			numbers = [cell.getAnswer() for cell in self.getColumn(index)]
@@ -205,7 +205,7 @@ class Board:
 	# and False otherwise.
 	#--------------------------------------------------------
 	def isBlockCorrect(self, x, y):
-		if x not in range(0, 3) or y not in range(0, 3):
+		if x not in range(3) or y not in range(3):
 			return None
 		else:		
 			numbers = [cell.getAnswer() for row in self.getBlock(x, y) for cell in row]
@@ -237,22 +237,22 @@ class Board:
 	# or block contains two of the same number. 
 	#--------------------------------------------------------
 	def isValid(self):
-		for row in range(0, 9):
+		for row in range(9):
 			numbers = [cell.getSolution() for cell in self.getRow(row)]
 			numbers.sort()
 
 			if numbers != list(range(1, 10)):
 				return False
 
-		for column in range(0, 9):
+		for column in range(9):
 			numbers = [cell.getSolution() for cell in self.getColumn(column)]
 			numbers.sort()
 
 			if numbers != list(range(1, 10)):
 				return False
 		
-		for x in range(0, 3):
-			for y in range(0, 3):
+		for x in range(3):
+			for y in range(3):
 				numbers = [cell.getSolution() for row in self.getBlock(x, y) for cell in row]
 				numbers.sort()
 
@@ -269,7 +269,7 @@ class Board:
 	# Swaps the cells in rows at y1 and y2.
 	#--------------------------------------------------------
 	def swapRows(self, y1, y2):
-		if y1 not in range(0, 9) or y2 not in range(0, 9):
+		if y1 not in range(9) or y2 not in range(9):
 			return None
 		elif y1 is not y2:
 			self.board_[y1], self.board_[y2] = self.board_[y2], self.board_[y1]
@@ -282,10 +282,10 @@ class Board:
 	# Swaps the cells in columns at x1 and x2.
 	#--------------------------------------------------------
 	def swapColumns(self, x1, x2):
-		if x1 not in range(0, 9) or x2 not in range(0, 9):
+		if x1 not in range(9) or x2 not in range(9):
 			return None
 		elif x1 is not x2:
-			for y in range(0, 9):
+			for y in range(9):
 				self.board_[y][x1], self.board_[y][x2] = self.board_[y][x2], self.board_[y][x1]
 
 	#--------------------------------------------------------
@@ -295,8 +295,8 @@ class Board:
 	# bottom-left to the top-right corner.
 	#--------------------------------------------------------
 	def swapMinorDiagonal(self):
-		for x in range(0, 9):
-			for y in range(0, 9):
+		for x in range(9):
+			for y in range(9):
 				if x + y < 9:
 					self.board_[y][x], self.board_[8 - x][8 - y] = self.board_[8 - x][8 - y], self.board_[y][x]
 		
@@ -307,8 +307,8 @@ class Board:
 	# top-left to the bottom-right corner.
 	#--------------------------------------------------------
 	def swapMajorDiagonal(self):
-		for x in range(0, 9):
-			for y in range(0, 9):
+		for x in range(9):
+			for y in range(9):
 				if x > y:
 					self.board_[y][x], self.board_[x][y] = self.board_[x][y], self.board_[y][x]
 
@@ -320,11 +320,11 @@ class Board:
 	# Swaps two major columns of blocks.
 	#--------------------------------------------------------
 	def swapBlockColumns(self, x1, x2):
-		if x1 not in range(0, 3) or x2 not in range(0, 3):
+		if x1 not in range(3) or x2 not in range(3):
 			return None
 
 		if x1 != x2:
-			for x in range(0, 3):
+			for x in range(3):
 				self.swapColumns(x1 * 3 + x, x2 * 3 + x)
 
 	#--------------------------------------------------------
@@ -335,11 +335,11 @@ class Board:
 	# Swaps two major rows of blocks.
 	#--------------------------------------------------------
 	def swapBlockRows(self, y1, y2):
-		if y1 not in range(0, 3) or y2 not in range(0, 3):
+		if y1 not in range(3) or y2 not in range(3):
 			return None
 
 		if y1 != y2:
-			for y in range(0, 3):
+			for y in range(3):
 				self.swapRows(y1 * 3 + y, y2 * 3 + y)
 
 	#--------------------------------------------------------
@@ -352,8 +352,8 @@ class Board:
 	#--------------------------------------------------------
 	def swapDigits(self, a, b):
 		if a in range(1, 10) and b in range(1, 10) and a != b:
-			for x in range(0, 9):
-				for y in range(0, 9):
+			for x in range(9):
+				for y in range(9):
 					if self.board_[y][x].getSolution() == a:
 						self.board_[y][x].solution_ = b
 						self.board_[y][x].answer_ = b
@@ -368,7 +368,7 @@ class Board:
 	# 2nd with 8th, and so on.
 	#--------------------------------------------------------
 	def flipHorizontal(self):
-		for x in range(0, 4):
+		for x in range(4):
 			self.swapColumns(x, 8 - x)
 
 	#--------------------------------------------------------
@@ -378,7 +378,7 @@ class Board:
 	# with 8th, and so on.
 	#--------------------------------------------------------
 	def flipVertical(self):
-		for y in range(0, 4):
+		for y in range(4):
 			self.swapRows(y, 8 - y)
 
 	#--------------------------------------------------------
@@ -387,7 +387,7 @@ class Board:
 	# Rotates the board grid-wise in a clockwise direction
 	#--------------------------------------------------------
 	def rotate(self):
-		self.board_ = [self.getColumn(x)[::-1] for x in range(0, 9)]		
+		self.board_ = [self.getColumn(x)[::-1] for x in range(9)]		
 
 	#--------------------------------------------------------
 	# - Perturb

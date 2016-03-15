@@ -53,7 +53,7 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 		row = self.board.getRow(4)
 
-		for column in range(0, 9):
+		for column in range(9):
 			self.assertEqual(row[column], self.board.board_[4][column], "A cell in getRow did not match the board's original data.")
 
 		# Row should be 9-cells in length
@@ -71,7 +71,7 @@ class Test_Board(unittest.TestCase):
 		# Column should be 9-cells in length
 		self.assertEqual(len(column), 9, "Returned column is of abnormal length")
 
-		for row in range(0, 9):
+		for row in range(9):
 			self.assertEqual(column[row], self.board.board_[row][6], "A cell in getColumn did not match the board's original data.")
 
 		# Calling an index out of range (0~8) should return None
@@ -87,8 +87,8 @@ class Test_Board(unittest.TestCase):
 		self.assertEqual(len(block), 3, "Returned block has abnormal number of rows")
 		self.assertEqual(len(block[0]), 3, "Returned block has abnormal number of columns")
 
-		for row in range(0, 3):
-			for column in range(0, 3):
+		for row in range(3):
+			for column in range(3):
 				self.assertEqual(block[row][column], self.board.board_[3 + row][6 + column], "A cell in getColumn did not match the board's original data.")
 
 		# Calling an either index out of range (0~2, 0~2) should return None
@@ -117,8 +117,8 @@ class Test_Board(unittest.TestCase):
 		x = None
 		y = None
 
-		for row in range(0, 9):
-			for column in range(0, 9):
+		for row in range(9):
+			for column in range(9):
 				if self.board.getCell(column, row).isMutable():
 					x = column
 					y = row
@@ -153,8 +153,8 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 		unsolved = []
 
-		for row in range(0, 9):
-			for column in range(0, 9):
+		for row in range(9):
+			for column in range(9):
 				if self.board.getCell(column, row).isMutable():
 					unsolved.append((column, row))
 
@@ -322,8 +322,8 @@ class Test_Board(unittest.TestCase):
 		# Cells should match the originals which are diagonally across and equi-distant
 		# to the main diagonal.
 
-		for x in range(0, 9):
-			for y in range(0, 9):
+		for x in range(9):
+			for y in range(9):
 				self.assertEqual(control.getCell(x, y).getSolution(), test1.getCell(y, x).getSolution(), "Control cell (" + str(x) + ", " + str(y) + ") does not equate to cell (" + str(y) + ", " + str(x) + ") after major diagonal swap.")
 
 		test2.swapMinorDiagonal()
@@ -334,8 +334,8 @@ class Test_Board(unittest.TestCase):
 		# Cells should match the originals which are diagonally across and equi-distant
 		# to the minor diagonal.
 
-		for x in range(0, 9):
-			for y in range(0, 9):
+		for x in range(9):
+			for y in range(9):
 				self.assertEqual(control.getCell(x, y).getSolution(), test2.getCell(8 - y, 8 - x).getSolution(), "Control cell (" + str(x) + ", " + str(y) + ") does not equate to cell (" + str(8 - y) + ", " + str(8 - x) + ") after minor diagonal swap.")
 
 		# Swapping twice on the same diagonal should result in the original board.
@@ -360,7 +360,7 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Swapping major columns " + str(x1) + " and " + str(x2) + " invalidated the board.")
 
 		# Swapping major columns essentially keeps the blocks the same, but swaps their horizontal region.
-		for y in range(0, 3):
+		for y in range(3):
 			self.assertEqual([cell.getSolution() for row in control.getBlock(x1, y) for cell in row], [cell.getSolution() for row in test.getBlock(x2, y) for cell in row], "Control block at (" + str(x1) + ", " + str(y) + ") did not equate to block at (" + str(x2) + ", " + str(y) + ") after major column swap")
 
 		# Swapping twice on the same major columns should result in the original board.
@@ -387,7 +387,7 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Swapping major rows " + str(y1) + " and " + str(y2) + " invalidated the board.")
 
 		# Swapping major rows essentially keeps the blocks the same, but swaps their vertical region.
-		for x in range(0, 3):
+		for x in range(3):
 			self.assertEqual([cell.getSolution() for row in control.getBlock(x, y1) for cell in row], [cell.getSolution() for row in test.getBlock(x, y2) for cell in row], "Control block at (" + str(x) + ", " + str(y1) + ") did not equate to block at (" + str(x) + ", " + str(y2) + ") after major row swap")
 
 		# Swapping twice on the same minor rows should result in the original board.
@@ -414,8 +414,8 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Swapping digits " + str(a) + " and " + str(b) + " invalidated the board.")
 		
 		# After swapping, any cell which was 'a' should now be 'b', and vice-versa.
-		for x in range(0, 9):
-			for y in range(0, 9):
+		for x in range(9):
+			for y in range(9):
 				if control.getCell(x, y).getSolution() == a:
 					self.assertEqual(test.getCell(x, y).getSolution(), b, "Control cell (" + str(x) + ", " + str(y) + ") => " + str(a) + ", but test cell is " + str(control.getCell(x, y).getSolution()) + " after swapping digits " + str(a) + " and " + str(b))
 
@@ -435,7 +435,7 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Flipping board horizontally invalidated it.")
 
 		# First column of flipped board should be same as last of original. 2nd same as 8th, etc.
-		for x in range(0, 9):
+		for x in range(9):
 			self.assertEqual([cell.getSolution() for cell in control.getColumn(x)], [cell.getSolution() for cell in test.getColumn(8 - x)], "Control column " + str(x) + " did not equate to column " + str(8 - x) + " after flipping horizontally")
 		
 		# Flipping the board horizontally twice should result in the original board.
@@ -454,7 +454,7 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Flipping board vertically invalidated it.")
 
 		# First row of flipped board should be same as last of original. 2nd same as 8th, etc.
-		for y in range(0, 9):
+		for y in range(9):
 			self.assertEqual([cell.getSolution() for cell in control.getRow(y)], [cell.getSolution() for cell in test.getRow(8 - y)], "Control row " + str(y) + " did not equate to row " + str(8 - y) + " after flipping vertically")
 		
 		# Flipping the board vertically twice should result in the original board.
@@ -466,7 +466,7 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 		test = Board(0, False)
 
-		for i in range(0, 20):
+		for i in range(20):
 			x = random.randint(0, 2)
 			c1 = random.randint(0, 1)
 			c2 = random.randint(c1+1, c1+2) % 3
@@ -481,7 +481,7 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 		test = Board(0, False)
 
-		for i in range(0, 20):
+		for i in range(20):
 			y = random.randint(0, 2)
 			r1 = random.randint(0, 1)
 			r2 = random.randint(r1+1, r1+2) % 3
@@ -503,8 +503,8 @@ class Test_Board(unittest.TestCase):
 		self.assertTrue(test.isValid(), "Rotating board clockwise invalidated it.")
 
 		# Cell at (x, y) should now be at (8 - y, x) in the clockwise rotated board.
-		for y in range(0, 9):
-			for x in range(0, 8 - y):
+		for y in range(9):
+			for x in range(8 - y):
 				self.assertEqual(control.getCell(x, y).getSolution(), test.getCell(8 - y, x).getSolution(), "Control cell (" + str(x) +", " + str(y) + ") did not equate to cell (" + str(8 - y) + ", " + str(x) + ") after clockwise rotation.")
 
 		# Rotating the board 360 degrees should result in the original board.
@@ -516,7 +516,7 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 	def test_24_randomly_perturb_board(self):
 	#--------------------------------------------------------------------------------
-		for i in range(0, 20):
+		for i in range(20):
 			test = Board(0, False)
 			control = test.getRaw()
 
@@ -529,7 +529,7 @@ class Test_Board(unittest.TestCase):
 
 		compound = Board(0, False)
 
-		for i in range(0, 100):
+		for i in range(100):
 			compound.perturb()
 
 			# Compound perturbance should retain board validity.
@@ -538,7 +538,7 @@ class Test_Board(unittest.TestCase):
 	#--------------------------------------------------------------------------------
 	def test_25_board_is_well_formed(self):
 	#--------------------------------------------------------------------------------
-		for i in range(0, 50):
+		for i in range(50):
 			test = Board(i)
 
 			# All randomly generated boards should be valid.
