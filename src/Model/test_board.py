@@ -404,8 +404,9 @@ class Test_Board(unittest.TestCase):
 		control = Board(0, False)
 		test = Board(0, False)
 
-		a = random.randint(1, 4)
-		b = random.randint(5, 9)
+		s = random.sample(range(1, 10), 2)
+		a = s[0]
+		b = s[1]
 
 		test.swapDigits(a, b)
 
@@ -513,9 +514,35 @@ class Test_Board(unittest.TestCase):
 		self.assertEqual(control.getRaw(), test.getRaw(), "Rotating the board 360 degrees caused an effective difference.")
 
 	#--------------------------------------------------------------------------------
-	def test_xx_board_is_well_formed(self):
+	def test_24_randomly_perturb_board(self):
 	#--------------------------------------------------------------------------------
-		pass
+		for i in range(0, 20):
+			test = Board(0, False)
+			control = test.getRaw()
+
+			executed = test.perturb()
+
+			# Perturbing the board should retain its validity.
+			self.assertTrue(test.isValid(), "Perturbing the board with transformation: <" + executed + "> invalidated it.")
+			# Perturbing the board should change its state.
+			self.assertNotEqual(test.getRaw(), control, "Perturbing the board with transformation: <" + executed + "> had no effect on it.")
+
+		compound = Board(0, False)
+
+		for i in range(0, 100):
+			compound.perturb()
+
+			# Compound perturbance should retain board validity.
+			self.assertTrue(test.isValid(), "Perturbing the board with transformation: <" + executed + "> invalidated it during compound perturbance.")
+
+	#--------------------------------------------------------------------------------
+	def test_25_board_is_well_formed(self):
+	#--------------------------------------------------------------------------------
+		for i in range(0, 50):
+			test = Board(i)
+
+			# All randomly generated boards should be valid.
+			self.assertTrue(test.isValid(), "Randomly generated board with " + str(81 - i) + " clues is invalid.")
 
 if __name__ == "__main__":
 	unittest.main(verbosity = 2)

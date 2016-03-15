@@ -14,7 +14,7 @@ class Board:
 	def __init__(self, solutions, randomize = True):
 		solutions = max(0, min(81, solutions))
 
-		self.board_ = self.generate(solutions, randomize)
+		self.generate(solutions, randomize)
 		self.unsolved_ = solutions
 		self.incorrect_ = solutions
 
@@ -37,13 +37,13 @@ class Board:
 	# unsolved and mutable, and the rest answered.
 	#--------------------------------------------------------
 	def generate(self, solutions, randomize):
-		board = []
+		self.board_ = []
 		random.seed()
 
 		# Generate base puzzle: known to be valid.
 		# Generate each row
 		for row in range(0, 9):
-			board.append([])
+			self.board_.append([])
 
 			# Generate each cell
 			for column in range(0, 9):
@@ -51,31 +51,21 @@ class Board:
 				number = ((column + shift) % 9) + 1
 
 				cell = Cell(number)
-				board[row].append(cell)
+				self.board_[row].append(cell)
 
 		if randomize:
 			# Randomly perturb the puzzle iteratively to generate a new puzzle
-			# Legal Transorfmations:
-			#--------------------------------------------------
-			#1. swap all cells across either diagonal
-			#2. swap regions (column/row triplets)
-			#3. rotate around 4th row/col: 1, 2, 3, 4, 5, 6, 7, 9 => 9, 8, 5, 4, 3, 6, 7, 2, 1
-			#4. swap rows/cols within region
-			#5. swap two specific digits
-			#6. puzzle rotate
+			for i in range(1000):
+				self.perturb()
 
-			pass
-
-		# Randomly hide given solutions		
-		while solutions > 0:
-			row = random.randint(0, 8)
-			column = random.randint(0, 8)
+		# Randomly hide given solutions
+		hidden = random.sample(range(0, 81), solutions)
+		
+		for index in hidden:
+			row = math.floor(index / 9)
+			column = index % 9
 			
-			if not board[row][column].isMutable():
-				board[row][column].hideAnswer()
-				solutions -= 1
-
-		return board
+			self.board_[row][column].hideAnswer()
 
 	#--------------------------------------------------------
 	# - Print Board
@@ -415,7 +405,66 @@ class Board:
 	# and its parameters.
 	#--------------------------------------------------------
 	def perturb(self):
-		return None
+		transform = random.randint(1, 6)
+
+		# Swap Regional Columns/Rows
+		if(transform is 1):
+			region = random.randint(0, 2)
+			coord1 = random.randint(0, 1)
+			coord2 = random.randint(coord1 + 1, coord1 + 2) % 3
+
+			if random.randint(0, 1) == 0:
+				self.swapColumns(region * 3 + coord1, region * 3 + coord2)
+				return "Swap Regional - Columns " + str(region * 3 + coord1) + ", " + str(region * 3 + coord2)
+
+			else:
+				self.swapRows(region * 3 + coord1, region * 3 + coord2)
+				return "Swap Regional - Rows " + str(region * 3 + coord1) + ", " + str(region * 3 + coord2)
+
+		# Swap Along Major/Minor Diagonal
+		elif(transform is 2):
+			if random.randint(0, 1) == 0:
+				self.swapMajorDiagonal()
+				return "Swap Diagonal - Major"
+
+			else:
+				self.swapMinorDiagonal()
+				return "Swap Diagonal - Minor"
+
+		# Swap Major Block Columns/Rows
+		elif(transform is 3):
+			coord1 = random.randint(0, 1)
+			coord2 = random.randint(coord1 + 1, coord1 + 2) % 3
+
+			if random.randint(0, 1) == 0:
+				self.swapBlockColumns(coord1, coord2)
+				return "Swap Major - Columns " + str(coord1) + ", " + str(coord2)
+
+			else:
+				self.swapBlockRows(coord1, coord2)
+				return "Swap Major - Rows " + str(coord1) + ", " + str(coord2)
+
+		# Swap Two Digits
+		elif(transform is 4):
+			digits = random.sample(range(1, 10), 2)
+
+			self.swapDigits(digits[0], digits[1])
+			return "Swap Digits - " + str(digits[0]) + ", " + str(digits[1])
+
+		# Flip Horizontally/Vertically
+		elif(transform is 5):
+			if random.randint(0, 1) == 0:
+				self.flipHorizontal()
+				return "Flip - Horizontal"
+
+			else:
+				self.flipVertical()
+				return "Flip - Vertical"
+
+		# Rotate Clockwise
+		else:
+			self.rotate()
+			return "Rotate"
 
 # Members
 	board_ = []
