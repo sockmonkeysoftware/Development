@@ -62,8 +62,8 @@ class Board:
 		hidden = random.sample(range(81), solutions)
 		
 		for index in hidden:
-			row = math.floor(index / 9)
-			column = index % 9
+			row = int(math.floor(index / 9))
+			column = int(index % 9)
 			
 			self.board_[row][column].hideAnswer()
 
@@ -72,7 +72,7 @@ class Board:
 	#--------------------------------------------------------
 	# Outputs the current board's answer state to console.
 	#--------------------------------------------------------
-	def printboard(self):
+	def display(self):
 		print()
 		print(".-------------------------.")
 		for row in self.getRaw():
