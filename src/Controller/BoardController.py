@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../Model")
 
-from bottle import static_file, template
+from bottle import static_file, template, request, app
 from Board import Board
 import json
 
@@ -26,8 +26,12 @@ def play():
 			if raw_map[y][x] != None:
 				id = chr(ord('a')+y) + str(x+1)
 				board_map[id] = raw_map[y][x]
+	
+	sess = request.environ.get('beaker.session')
+	
+	sess['game_board'] = game_board
 
-	return template('index', board = board_map)
+	return template('index', board=board_map)
 
 #----------------------------------------------------------------
 def update(cell_id, value):

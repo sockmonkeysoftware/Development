@@ -72,7 +72,7 @@ class Board:
 	#--------------------------------------------------------
 	# Outputs the current board's answer state to console.
 	#--------------------------------------------------------
-	def print(self):
+	def printboard(self):
 		print()
 		print(".-------------------------.")
 		for row in self.getRaw():

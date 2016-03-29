@@ -2,12 +2,15 @@
 # - Sock Monkey Suduko Main Page Router				-
 #----------------------------------------------------------------
 #================================================================
-from bottle import request, response, app
-from bottle import default_app, run, route
-from bottle import get, put, post, request, template
-from bottle import static_file
-import json
+from bottle import run, route, view, app, hook
+from bottle import get, put, post, request, redirect, template
+from bottle import static_file, error, debug
 from beaker.middleware import SessionMiddleware
+import json
+
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/src/Controller")
+from BoardController import *
 
 import example_board
 
@@ -35,17 +38,17 @@ app = SessionMiddleware(app, session_opts)
 # Example Use: 
 #
 # @get('/')
-# @authenticate
+# @validate
 # def app():
 
-def authenticate(func):
+def validate(func):
     @wraps(func)
     def call(*args, **kwargs):
         sess_id = request.cookies.get('beaker.session.id', False)
         if not sess_id:
             return redirect('/login')
         sess = request.environ.get('beaker.session')
-        if 'uid' not in sess:
+        if 'board' not in sess:
             return redirect('/login')
         return func(*args, **kwargs)
     return call
@@ -55,8 +58,15 @@ def authenticate(func):
 #================================================================
 
 @get('/')
-def app():
+def index():
     return template('index', board=example_board.revealed_cells)
+    
+@get('/new')
+def new_game():
+    play()
+    
+    sess = request.environ.get('beaker.session')
+    print(sess['game_board'])
     
 @post('/update')
 def update_handler():
@@ -105,7 +115,9 @@ def update_handler():
 def send_static(filename):
     return static_file(filename, root='static/')
 
+def main():
+    debug(True)
+    run(app=app, quiet=False, reloader=True)
+    
 if __name__ == "__main__":
-    run(reloader = True, host="0.0.0.0")
-else:
-    application = default_app()
+    main()
