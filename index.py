@@ -2,16 +2,56 @@
 # - Sock Monkey Suduko Main Page Router				-
 #----------------------------------------------------------------
 #================================================================
-from bottle import request, response
+from bottle import request, response, app
 from bottle import default_app, run, route
 from bottle import get, put, post, request, template
 from bottle import static_file
 import json
+from beaker.middleware import SessionMiddleware
 
 import example_board
 
 #================================================================
 # - A correct board for temporary UI testing...
+#================================================================
+
+# Beaker Session Options and Initialization
+app = app()
+session_opts = {
+    'session.auto': True,
+    'session.cookie_expires': True,
+    'session.encrypt_key': 'please use a random key and keep it secret!',
+    'session.timeout': 3600 * 24,  # 1 day
+    'session.type': 'cookie',
+    'session.validate_key': True,
+    'session.httponly': True,
+}
+
+app = SessionMiddleware(app, session_opts)
+
+#================================================================
+# - Authentication Route Decorator
+#================================================================
+# Example Use: 
+#
+# @get('/')
+# @authenticate
+# def app():
+
+def authenticate(func):
+    @wraps(func)
+    def call(*args, **kwargs):
+        sess_id = request.cookies.get('beaker.session.id', False)
+        if not sess_id:
+            return redirect('/login')
+        sess = request.environ.get('beaker.session')
+        if 'uid' not in sess:
+            return redirect('/login')
+        return func(*args, **kwargs)
+    return call
+
+#================================================================
+# - Application Routes
 #================================================================
 
 @get('/')
