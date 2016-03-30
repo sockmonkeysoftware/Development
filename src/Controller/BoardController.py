@@ -11,7 +11,12 @@ import json
 # Make this a Session variable.
 game_board = None
 
+#----------------------------------------------------------------
 def validate(func):
+#----------------------------------------------------------------
+# Validation decorator which wraps routes requiring a valid
+# game. If no session/game exists, route is redirected to '/new'
+#----------------------------------------------------------------
 	@wraps(func)
 	def call(*args, **kwargs):
 		if not game_exists():

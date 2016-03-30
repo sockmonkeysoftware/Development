@@ -1,5 +1,5 @@
 #================================================================
-# - Sock Monkey Suduko Main Page Router				-
+# - Sock Monkey Suduko Main Page Router
 #----------------------------------------------------------------
 #================================================================
 from bottle import run, route, view, app, hook
@@ -58,6 +58,10 @@ def end_game():
 @route('/<filename:path>')
 def send_static(filename):
     return static_file(filename, root='static/')
+
+#================================================================
+# - Main Application
+#================================================================
 
 def main():
     debug(True)
