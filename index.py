@@ -13,13 +13,10 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/src/Controller")
 from BoardController import *
 
-import example_board
-
 #================================================================
-# - A correct board for temporary UI testing...
+# - Beaker Session Options and Initialization
 #================================================================
 
-# Beaker Session Options and Initialization
 app = app()
 session_opts = {
     'session.auto': True,
@@ -32,18 +29,6 @@ session_opts = {
 }
 
 app = SessionMiddleware(app, session_opts)
-
-#================================================================
-# - Valid Game Route Decorator
-#================================================================
-
-def validate(func):
-    @wraps(func)
-    def call(*args, **kwargs):
-        if not game_exists():
-            return redirect('/new')
-        return func(*args, **kwargs)
-    return call
 
 #================================================================
 # - Application Routes

@@ -1,14 +1,23 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../Model")
 
-from bottle import run, route, view, app, hook
-from bottle import get, put, post, request, redirect, template, response
+from bottle import run, route, view, app
+from bottle import request, redirect, template, response
 from bottle import static_file, error, debug
 from Board import Board
+from functools import wraps
 import json
 
 # Make this a Session variable.
 game_board = None
+
+def validate(func):
+	@wraps(func)
+	def call(*args, **kwargs):
+		if not game_exists():
+			return redirect('/new')
+		return func(*args, **kwargs)
+	return call
 
 #----------------------------------------------------------------
 def play(game_board=None):
