@@ -2,10 +2,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<meta name="viewport" content="width=device-width" />
-
 		<!-- Bootstrap core CSS  -->
 		<link href="../css/bootstrap.min.css" rel="stylesheet" />
 		<!--  Light Bootstrap Table core CSS -->
@@ -16,12 +14,11 @@
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
 		<link href="../css/pe-icon-7-stroke.css" rel="stylesheet" />
-		
-		<title></title>
+		<title>Sock Monkey Sudoku</title>
 	</head>
 	<body>
 		<center>
-		<h1 style="color:white; font-size: 60px;">SUDOKU</h1>
+		<h1 style="color:black; font-size: 60px;">SOCK MONKEY SUDOKU</h1><hr /><br />
 		<table id="sudoku-grid" cellspacing="0" cellpadding="0">
 		<!--  Header -->
 		%for y in range(9):
@@ -67,12 +64,13 @@
 			<tr>
 		%end
 		</table>
-		<span><h2 id='userMessage' style="color:white;"></h2></span>
-		<span><h1 id='winMessage' style="color:white;"></h1></span>
+		<span><h2 id='userMessage' style="color:black;"></h2></span>
+		<span><h1 id='winMessage' style="color:black;"></h1></span>
 		
 		
 		<form role="form" method="post" onsubmit="return false;">
-			<button class="btn btn-info btn-fill pull-right" type="submit">Check Answers</button>
+			<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
+			<button class="btn btn-info btn-fill" type="submit">Check Answers (Doesn't Work Yet)</button>
 		</form>
 		
 		</center>
@@ -102,6 +100,12 @@
 	function win() {
 		document.getElementById('winMessage').innerHTML = "You win!"
 	};
+	</script>
+	
+	<script type="text/javascript">
+		$('.confirmation').on('click', function () {
+			return confirm('Are you sure you want to start a new game?');
+		});
 	</script>
 
 </html>

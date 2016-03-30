@@ -48,7 +48,7 @@ class Board:
 			# Generate each cell
 			for column in range(9):
 				shift = ((row * 3) % 9) + math.floor(row / 3)
-				number = ((column + shift) % 9) + 1
+				number = int(((column + shift) % 9) + 1)
 
 				cell = Cell(number)
 				self.board_[row].append(cell)

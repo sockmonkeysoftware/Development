@@ -1,7 +1,9 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../Model")
 
-from bottle import static_file, template, request, app
+from bottle import run, route, view, app, hook
+from bottle import get, put, post, request, redirect, template, response
+from bottle import static_file, error, debug
 from Board import Board
 import json
 
@@ -9,11 +11,12 @@ import json
 game_board = None
 
 #----------------------------------------------------------------
-def play():
+def play(game_board=None):
 #----------------------------------------------------------------
-# Creates a new sudoku board and returns a template displaying it
+# Returns a template displaying a Sudoku game board
 #----------------------------------------------------------------
-	game_board = Board(40, False)
+	if game_board is None:
+		game_board = Board(40, False)
 	
 	raw_map = game_board.getRaw()
 	board_map = {}
@@ -28,20 +31,74 @@ def play():
 				board_map[id] = raw_map[y][x]
 	
 	sess = request.environ.get('beaker.session')
-	
 	sess['game_board'] = game_board
 
 	return template('index', board=board_map)
 
 #----------------------------------------------------------------
-def update(cell_id, value):
+def resume():
 #----------------------------------------------------------------
+# If returning user with previous game, gets game_board
+# from session and begins play on previous game
+#----------------------------------------------------------------
+	sess = request.environ.get('beaker.session')
+	game_board = sess['game_board']
+	
+	return play(game_board)
+
+#----------------------------------------------------------------
+def end():
+#----------------------------------------------------------------
+# Ends a game by retrieving current session and deleting
+# Redirects to index for new game creation
+#----------------------------------------------------------------
+	sess = request.environ.get('beaker.session')
+	sess.delete()
+	return redirect('/')
+
+#----------------------------------------------------------------	
+def game_exists():
+#----------------------------------------------------------------
+# Checks session for valid cookie and existence of game_board
+#----------------------------------------------------------------
+	sess_id = request.cookies.get('beaker.session.id', False)
+	if not sess_id:
+		return False
+	sess = request.environ.get('beaker.session')
+	if 'game_board' not in sess:
+		return False
+	return True
+	
+#----------------------------------------------------------------
+def update():
+#----------------------------------------------------------------
+# Receives API call with cell_id and value
+# Submits a user's input to the board
+# Sends response True if the guess was correct, False otherwise
+#----------------------------------------------------------------
+#----------------------OLD NOTES---------------------------------
 # * cell_id : the character-int pair (row-column) where the guess
 #	was made.
 # * value : the user's guess (1~9) for the cell's solution.
 # Submits a user's input to the board.
 # Returns True if the guess was correct, and False otherwise.
 #----------------------------------------------------------------
+	correct = False
+		
+	try:
+		try:
+			cell_id = request.forms.get('id')
+			value = request.forms.get('value')
+		except:
+			raise ValueError
+
+	except ValueError:
+		response.status = 400
+		return
+
+	sess = request.environ.get('beaker.session')
+	game_board = sess['game_board']
+
 	if game_board is not None:
 		# Translate coordinates back to 2-D array.
 		x = int(cell_id[1]) - 1
@@ -52,7 +109,9 @@ def update(cell_id, value):
 		# Submit the user's answer to the board.
 		correct = game_board.submitAnswer(x, y, answer)
 
-		return correct
+		# return 200 Success
+		response.headers['Content-Type'] = 'application/json'
+		return json.dumps({'id': cell_id,'correct': correct})
 
 #----------------------------------------------------------------
 def status():

@@ -18,11 +18,6 @@ function updateCellValue(cell_id, value) {
 					console.log("Incorrect Number!");
 					$('#'+cell_id).css('background-color', 'red');
 				}
-				
-				//if (results.length > 0) {
-				//} else {
-				//	$('#results').html('Something went terribly wrong! Please try again.')
-				//}
 			},
 			error: function(error) {
 				console.log(error)
