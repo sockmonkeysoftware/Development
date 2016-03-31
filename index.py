@@ -8,15 +8,15 @@ from bottle import static_file, error, debug
 from functools import wraps
 from beaker.middleware import SessionMiddleware
 import json
-
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/src/Controller")
 from BoardController import *
 
+from bottle import default_app, route
+
 #================================================================
 # - Beaker Session Options and Initialization
 #================================================================
-
 app = app()
 session_opts = {
     'session.auto': True,
@@ -27,8 +27,7 @@ session_opts = {
     'session.validate_key': True,
     'session.httponly': True,
 }
-
-app = SessionMiddleware(app, session_opts)
+application = SessionMiddleware(app, session_opts)
 
 #================================================================
 # - Application Routes
@@ -38,13 +37,13 @@ app = SessionMiddleware(app, session_opts)
 @validate
 def index():
     return resume()
-    
+
 @route('/new')
 def new_game():
     if game_exists(): 
         redirect('/')
     return play()
-    
+
 @post('/update')
 @validate
 def update_handler():
@@ -62,10 +61,9 @@ def send_static(filename):
 #================================================================
 # - Main Application
 #================================================================
-
 def main():
     debug(True)
-    run(app=app, quiet=False, reloader=True)
-    
+    run(app=application, quiet=False, reloader=True)
+
 if __name__ == "__main__":
     main()

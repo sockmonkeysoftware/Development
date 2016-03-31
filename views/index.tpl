@@ -25,7 +25,7 @@
 			<tr>
 			%for x in range(9):
 				%id = chr(ord('a')+y) + str(x+1)
-					
+
 					%if x % 3 == 0 and y % 3 == 0 :
 						<td class="vert-hor-3">
 					%elif x % 3 == 0 and y % 3 != 0 :
@@ -41,20 +41,20 @@
 					%else:
 						<td>
 					%end
-					
+
 					<div id="boxdiv">
 					<input class="cell"
-					
-					%if (board.has_key(id)):
+
+					%if (id in board):
 						value={{board[id]}}
 						readonly
 						style="background-color:black"
 					%else:
 						value=""
 					%end
-					
+
 					name={{id}}
-					id={{id}} 
+					id={{id}}
 					maxlength="1" size="1"
 					onchange="updateCellValue(this.id, this.value)"
 					onkeypress="return validateInput(event)"
@@ -66,27 +66,27 @@
 		</table>
 		<span><h2 id='userMessage' style="color:black;"></h2></span>
 		<span><h1 id='winMessage' style="color:black;"></h1></span>
-		
-		
+
+
 		<form role="form" method="post" onsubmit="return false;">
 			<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
 			<button class="btn btn-info btn-fill" type="submit">Check Answers (Doesn't Work Yet)</button>
 		</form>
-		
+
 		</center>
 		<!--   Core JS Files   -->
 		<script src="../js/jquery-1.10.2.js" type="text/javascript"></script>
 		<script src="../js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="../js/light-bootstrap-dashboard.js"></script>
 	</body>
-	
+
 	<script type="text/javascript" src="../js/main.js"></script>
-	
+
 	<script>
 	function printChange(id, value) {
 		console.log(id, value);
 	};
-	
+
 	function validateInput(event) {
 		if (event.charCode >= 49 && event.charCode <= 57) {
 			document.getElementById('userMessage').innerHTML = ""
@@ -96,12 +96,12 @@
 			return false;
 		};
 	};
-	
+
 	function win() {
 		document.getElementById('winMessage').innerHTML = "You win!"
 	};
 	</script>
-	
+
 	<script type="text/javascript">
 		$('.confirmation').on('click', function () {
 			return confirm('Are you sure you want to start a new game?');
