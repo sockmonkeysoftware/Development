@@ -8,7 +8,7 @@ Sock Monkey Sudoku Web App
 		- /Controllers : Python Controller middle layer
 		- /Model : Python Model back layer
 - Installation:
-	- Create a Bottle (Python 3.4) web app, with bottle application located at: /your-PA-username/Sudoko/Development/index.py
+	- Create a Bottle (Python 3.4) web app, with bottle application located at: /your-PA-username/Sudoku/Development/index.py
 	- Open up a console, go to the main Sudoku directory, and remove the Development directory (trust us)
 		- cd Sudoku/
 		- rm -r Development
