@@ -46,9 +46,13 @@
 					<input class="cell"
 					
 					%if (board.has_key(id)):
-						value={{board[id]}}
-						readonly
-						style="background-color:black"
+						value={{board[id][0]}}
+						
+						%if (board[id][1] == False):
+							readonly
+							style="background-color:black"
+						%end
+		
 					%else:
 						value=""
 					%end
