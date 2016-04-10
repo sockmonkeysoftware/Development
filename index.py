@@ -54,6 +54,11 @@ def update_handler():
 def end_game():
     return end()
 
+@route('/status')
+@validate
+def game_status():
+    return status()
+
 @route('/<filename:path>')
 def send_static(filename):
     return static_file(filename, root='static/')

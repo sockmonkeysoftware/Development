@@ -131,4 +131,12 @@ def update():
 #----------------------------------------------------------------
 def status():
 #----------------------------------------------------------------
-	pass
+	sess = request.environ.get('beaker.session')
+	game_board = sess['game_board']
+
+	if game_board is not None:
+		status = game_board.isSolved()
+
+		# return 200 Success
+		response.headers['Content-Type'] = 'application/json'
+		return json.dumps({'status': status})
