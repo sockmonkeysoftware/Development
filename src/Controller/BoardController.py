@@ -42,7 +42,8 @@ def play(game_board=None):
 		for x in range(9):
 			if raw_map[y][x] != None:
 				id = chr(ord('a')+y) + str(x+1)
-				board_map[id] = raw_map[y][x]
+				isMutable = game_board.getCell(x,y).isMutable()
+				board_map[id] = (raw_map[y][x], isMutable)
 	
 	sess = request.environ.get('beaker.session')
 	sess['game_board'] = game_board
