@@ -1,7 +1,7 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
 	if (value == "") {
-		$('#'+cell_id).css('background-color', 'white');
+		/* $('#'+cell_id).css('background-color', 'white'); */
 	} else {
 		$.ajax({
 			type: "POST",
@@ -9,7 +9,7 @@ function updateCellValue(cell_id, value) {
 			data : { 'id': cell_id, 'value': value },
 			success: function(results) {
 				console.log(results);
-				
+				/*
 				if (results['correct'] === true) {
 					console.log("Correct Number!");
 					$('#'+cell_id).css('background-color', 'green');
@@ -18,12 +18,38 @@ function updateCellValue(cell_id, value) {
 					console.log("Incorrect Number!");
 					$('#'+cell_id).css('background-color', 'red');
 				}
+				*/
 			},
 			error: function(error) {
 				console.log(error)
 			}
 		});
 	};
+};
+
+function checkStatus() {
+	console.log("checkStatus() Called!")
+
+	$.ajax({
+		type: "GET",
+		url: "/status",
+		data : {},
+		success: function(results) {
+			console.log(results);
+			
+			if (results['correct'] === true) {
+				console.log("Correct Number!");
+				$('#'+cell_id).css('background-color', 'green');
+			} 
+			else if (results['correct'] === false) {
+				console.log("Incorrect Number!");
+				$('#'+cell_id).css('background-color', 'red');
+			}
+		},
+		error: function(error) {
+			console.log(error)
+		}
+	});
 };
 
 

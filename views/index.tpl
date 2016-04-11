@@ -74,7 +74,7 @@
 
 		<form role="form" method="post" onsubmit="return false;">
 			<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
-			<button class="btn btn-info btn-fill" type="submit">Check Answers (Doesn't Work Yet)</button>
+			<button class="btn btn-info btn-fill" type="submit">Check Answers</button>
 		</form>
 
 		</center>
@@ -87,23 +87,24 @@
 	<script type="text/javascript" src="../js/main.js"></script>
 
 	<script>
-	function printChange(id, value) {
-		console.log(id, value);
-	};
-
-	function validateInput(event) {
-		if (event.charCode >= 49 && event.charCode <= 57) {
-			document.getElementById('userMessage').innerHTML = ""
-			return true;
-		} else {
-			document.getElementById('userMessage').innerHTML = "Whoops! Make sure you enter a valid digit 1-9!"
-			return false;
+		function printChange(id, value) {
+			console.log(id, value);
 		};
-	};
 
-	function win() {
-		document.getElementById('winMessage').innerHTML = "You win!"
-	};
+		function validateInput(event) {
+			if (event.charCode >= 49 && event.charCode <= 57) {
+				document.getElementById('userMessage').innerHTML = ""
+				return true;
+			} else {
+				document.getElementById('userMessage').innerHTML = "Whoops! Make sure you enter a valid digit 1-9!"
+				return false;
+			};
+		};
+
+		function win() {
+			document.getElementById('winMessage').innerHTML = "You win!"
+		};
+		
 	</script>
 
 	<script type="text/javascript">
