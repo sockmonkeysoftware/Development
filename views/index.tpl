@@ -74,7 +74,7 @@
 
 		<form role="form" method="post" onsubmit="return false;">
 			<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
-			<button class="btn btn-info btn-fill" type="submit">Check Answers</button>
+			<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
 		</form>
 
 		</center>

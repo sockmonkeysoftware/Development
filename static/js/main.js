@@ -1,5 +1,8 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
+	
+	$('#'+cell_id).css('background-color', 'white');
+	
 	if (value == "") {
 		/* $('#'+cell_id).css('background-color', 'white'); */
 	} else {
@@ -36,15 +39,26 @@ function checkStatus() {
 		data : {},
 		success: function(results) {
 			console.log(results);
-			
-			if (results['correct'] === true) {
-				console.log("Correct Number!");
-				$('#'+cell_id).css('background-color', 'green');
-			} 
-			else if (results['correct'] === false) {
-				console.log("Incorrect Number!");
-				$('#'+cell_id).css('background-color', 'red');
-			}
+			status_map = results['status_map']
+			for (cell in status_map) {
+				current_cell = status_map[cell]
+				cell_id = current_cell[0]
+				isMutable = current_cell[1]
+				isCorrect = current_cell[2]
+				
+				if (isMutable === true) {
+					if (isCorrect === true) {
+						$('#'+cell_id).css('background-color', 'green');
+					}
+					else if (isCorrect === false) {
+						$('#'+cell_id).css('background-color', 'red');
+					}
+				}
+				
+				if (results['status'] === 'Correct') {
+					win()
+				}
+			};
 		},
 		error: function(error) {
 			console.log(error)

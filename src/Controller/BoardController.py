@@ -134,9 +134,21 @@ def status():
 	sess = request.environ.get('beaker.session')
 	game_board = sess['game_board']
 
+	status_map = []
+	
+	for y in range(9):	
+		for x in range(9):
+			id = chr(ord('a')+y) + str(x+1)
+			isCorrect = game_board.getCell(x,y).isCorrect()
+			isMutable = game_board.getCell(x,y).isMutable()
+			value = game_board.getCell(x,y).getAnswer()
+			
+			if value:
+				status_map.append((id, isMutable, isCorrect))
+	
 	if game_board is not None:
 		status = game_board.isSolved()
 
 		# return 200 Success
 		response.headers['Content-Type'] = 'application/json'
-		return json.dumps({'status': status})
+		return json.dumps({'status': status, 'status_map': status_map})
