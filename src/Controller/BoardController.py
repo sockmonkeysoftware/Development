@@ -30,7 +30,7 @@ def play(game_board=None):
 # Returns a template displaying a Sudoku game board
 #----------------------------------------------------------------
 	if game_board is None:
-		game_board = Board(40, False)
+		game_board = Board(40, True)
 	
 	raw_map = game_board.getRaw()
 	board_map = {}
