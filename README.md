@@ -25,3 +25,17 @@ Sock Monkey Sudoku Web App
 	- Install necessary modules:
 		- pip3 install --user beaker
 	- Enjoy!
+
+- Keeping Up-To-Date:
+	- Pull the latest Master branch changes using:
+		- git pull origin master
+	
+	- When working on your stuff, please do NOT use the master branch.
+	- To create your own branch:
+		- git checkout -b my_branch_name
+			- use our naming structure: dev_[part]_[task] e.g: dev_controller_status
+	- To switch to a branch which is already made:
+		- git checkout my_branch_name
+	- To switch back to master to grab the latest Sprint work (to be able to use the pull from above)
+		- git checkout master
+
