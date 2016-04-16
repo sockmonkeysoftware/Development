@@ -41,7 +41,7 @@ Sock Monkey Sudoku Web App
 
 - Adding Your Changes:
 	- To add your own branch work to the repo:
-		- git add <file list to be added>
-		- git commit -m "<some message explaining what you added/did"
+		- git add [file list to be added]
+		- git commit -m "some message explaining what you added/did"
 		- git push -u origin my_branch_name
 
