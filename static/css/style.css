@@ -89,10 +89,6 @@ body {
 	border-bottom:3px solid gray;
 }
 
-
-
-
-
 #sudoku-grid input {
 	float: left;
 	padding: 0;
@@ -102,7 +98,6 @@ body {
 	font-size: 30pt;
 	-webkit-border-radius:0px;
 }
-
 
 .cell {
 	border-style:none;
