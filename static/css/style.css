@@ -2,15 +2,156 @@ body {
 	background-color:#fff;
 }
 
+h1 {
+	color:black;
+	font-size: 30px;
+}
+
 .container {
 	margin:0 auto;
 	width:880px;
 	text-align:left;
 }
 
+table {
+	max-width: 50%;
+	min-width: 30%;
+}
+td {
+	width: 10%;
+	position: relative;
+}
+td:after {
+	content: '';
+	display: block;
+	margin-top: 100%;
+}
+td .content {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: gold;
+}
+
 /* --------------------------------------------------------------------------------
 	Sudoku
 ----------------------------------------------------------------------------------*/
+
+#sudoku-grid .vert-3 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:3px solid gray;
+	border-right:1px solid gray;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+}
+
+#sudoku-grid .vert-8 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:3px solid gray;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+}
+
+#sudoku-grid .hor-3 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:1px solid gray;
+	border-top: 3px solid gray;
+	border-bottom:1px solid gray;
+}
+
+#sudoku-grid .hor-8 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:1px solid gray;
+	border-top:1px solid gray;
+	border-bottom:3px solid gray;
+}
+
+#sudoku-grid .vert-hor-3 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:3px solid gray;
+	border-right:1px solid gray;
+	border-top:3px solid gray;
+	border-bottom:1px solid gray;
+}
+
+#sudoku-grid .vert-hor-8 {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:3px solid gray;
+	border-top:3px solid gray;
+	border-bottom:1px solid gray;
+}
+
+#sudoku-grid td {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:1px solid gray;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+}
+
+
+#sudoku-grid input {
+	float: left;
+	padding: 0;
+	width:30px; height:30px;
+	text-align:center;
+	vertical-align:middle;
+	font-size: 12pt;
+	-webkit-border-radius:0px;
+}
+
+
+.cell {
+	/*border-style:none;*/
+	color:#828A96;
+}
+
+
+/* Media Specific Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media (min-width: 550px) {
+
+h1 {
+	color:black;
+	font-size: 60px;
+}
+
+#sudoku-grid input {
+	float: left;
+	padding: 0;
+	width:60px; height:60px;
+	text-align:center;
+	vertical-align:middle;
+	font-size: 30pt;
+	-webkit-border-radius:0px;
+}
 
 #sudoku-grid .vert-3 {
 	text-align:center;
@@ -89,22 +230,5 @@ body {
 	border-bottom:3px solid gray;
 }
 
-
-
-
-
-#sudoku-grid input {
-	float: left;
-	padding: 0;
-	width:75px; height:75px;
-	text-align:center;
-	vertical-align:middle;
-	font-size: 30pt;
-	-webkit-border-radius:0px;
 }
 
-
-.cell {
-	border-style:none;
-	color:#828A96;
-}

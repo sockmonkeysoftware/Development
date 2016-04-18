@@ -18,28 +18,30 @@
 	</head>
 	<body>
 		<center>
-		<h1 style="color:black; font-size: 60px;">SOCK MONKEY SUDOKU</h1><hr /><br />
-		<table id="sudoku-grid" cellspacing="0" cellpadding="0">
+		<h1>SOCK MONKEY SUDOKU</h1><hr /><br />
+
+		<div class="table-responsive" id="sudoku-grid">
+			<table>
 		<!--  Header -->
 		%for y in range(9):
 			<tr>
 			%for x in range(9):
 				%id = chr(ord('a')+y) + str(x+1)
-
+					
 					%if x % 3 == 0 and y % 3 == 0 :
-						<td class="vert-hor-3">
+						<td class="vert-hor-3 content">
 					%elif x % 3 == 0 and y % 3 != 0 :
-						<td class="vert-3">
+						<td class="vert-3 content">
 					%elif x % 3 != 0 and y % 3 == 0 :
-						<td class="hor-3">
+						<td class="hor-3 content">
 					%elif x % 8 == 0 and y % 8 == 0 :
-						<td class="vert-hor-8">
+						<td class="vert-hor-8 content">
 					%elif x % 8 == 0 and y % 8 != 0 :
-						<td class="vert-8">
+						<td class="vert-8 content">
 					%elif x % 8 != 0 and y % 8 == 0 :
-						<td class="hor-8">
+						<td class="hor-8 content">
 					%else:
-						<td>
+						<td class="content">
 					%end
 
 					<div id="boxdiv">
@@ -68,6 +70,8 @@
 			<tr>
 		%end
 		</table>
+		</div>
+
 		<span><h2 id='userMessage' style="color:black;"></h2></span>
 		<span><h1 id='winMessage' style="color:black;"></h1></span>
 
