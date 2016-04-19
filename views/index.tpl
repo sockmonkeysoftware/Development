@@ -27,7 +27,6 @@
 			<tr>
 			%for x in range(9):
 				%id = chr(ord('a')+y) + str(x+1)
-					
 					%if x % 3 == 0 and y % 3 == 0 :
 						<td class="vert-hor-3 content">
 					%elif x % 3 == 0 and y % 3 != 0 :
@@ -44,15 +43,14 @@
 						<td class="content">
 					%end
 
-					<div id="boxdiv">
-					<input class="cell"
+					<input class="cell" readonly
 					
 					%if (id in board):
 						value={{board[id][0]}}
 						
 						%if (board[id][1] == False):
-							readonly
 							style="background-color:black"
+							immutable="immutable"
 						%end
 		
 					%else:
@@ -62,7 +60,6 @@
 					name={{id}}
 					id={{id}}
 					maxlength="1" size="1"
-					onchange="updateCellValue(this.id, this.value)"
 					onkeypress="return validateInput(event)"
 					/>
 					</div></td>

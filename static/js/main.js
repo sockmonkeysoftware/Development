@@ -1,11 +1,7 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
-	
-	$('#'+cell_id).css('background-color', 'white');
-	
-	if (value == "") {
-		/* $('#'+cell_id).css('background-color', 'white'); */
-	} else {
+		
+	if (value != "") {
 		$.ajax({
 			type: "POST",
 			url: "/update",
@@ -67,27 +63,30 @@ function checkStatus() {
 };
 
 
-//$(document).ready(function() {
-	//console.log("ready!");
+$(document).ready(function() {
+	$("input.cell").focus(function(e){
+		var cell = $(this);
 
-	//$('#try-again').hide();
+		if(!cell.attr("immutable"))
+			$(this).attr("style", "background-color:#A0A0FF");
+	});
 
-	// on form submission ...
-	// $('form').on('submit', function() {
-	//$('.cell').on('function', function updateCellValue() {
-		//var cell_id = $(this).attr("id");
-		//var value = $(this).val();
-		
-		//console.log("the form has beeen submitted");
+	$("input.cell").focusout(function(e){
+		var cell = $(this);
 
-		// grab values
-		//valueOne = $('input[name="location"]').val();
-		//valueTwo = $('input[name="language"]').val();
-		//console.log(valueOne, valueTwo)
-	//$('#try-again').on('click', function(){
-	//	$('input').val('').show();
-	//	$('#try-again').hide();
-	//	$('#results').html('');
-	//});
+		if(!cell.attr("immutable"))
+			$(this).attr("style", "background-color:#FFFFFF");
+	});
 
-//});
+	$("input.cell").keyup(function(e){
+		var cell = $(this);
+
+		if(!cell.attr("immutable")){
+			var answer = e.keyCode - 48;
+			if(0 < answer && answer < 10){
+				cell.val(answer);
+				updateCellValue(cell.attr("id"), answer);
+			}
+		}
+	});
+});
