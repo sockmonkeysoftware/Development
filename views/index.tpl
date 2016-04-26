@@ -93,7 +93,7 @@
 		};
 
 		function validateInput(event) {
-			if (event.charCode >= 49 && event.charCode <= 57) {
+			if ((event.charCode >= 49 && event.charCode <= 57) || event.charCode == 8 || event.charCode == 32 || event.charCode == 46) {
 				document.getElementById('userMessage').innerHTML = ""
 				return true;
 			} else {

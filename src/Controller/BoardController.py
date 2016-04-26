@@ -119,10 +119,13 @@ def update():
 		x = int(cell_id[1]) - 1
 		y = ord(cell_id[0]) - ord('a')
 
-		answer = int(value)
-		
-		# Submit the user's answer to the board.
-		correct = game_board.submitAnswer(x, y, answer)
+		if value == "clear":
+			# Clear the user's answer on the board.
+			correct = game_board.clearAnswer(x, y)
+		else:
+			# Submit the user's answer to the board.
+			answer = int(value)
+			correct = game_board.submitAnswer(x, y, answer)
 
 		# return 200 Success
 		response.headers['Content-Type'] = 'application/json'

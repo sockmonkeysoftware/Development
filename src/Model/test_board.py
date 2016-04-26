@@ -544,5 +544,26 @@ class Test_Board(unittest.TestCase):
 			# All randomly generated boards should be valid.
 			self.assertTrue(test.isValid(), "Randomly generated board with " + str(81 - i) + " clues is invalid.")
 
+	#--------------------------------------------------------------------------------
+	def test_26_clear_answer_sets_the_value_of_a_cell_to_none(self):
+	#--------------------------------------------------------------------------------
+		test = Board(81, False)
+
+		# Pick a random point and a random guess to be cleared
+		x = random.randint(0, 8)
+		y = random.randint(0, 8)
+		guess = random.randint(1, 9)
+
+		print(test.unsolved_)
+		# Submitted guess
+		test.submitAnswer(x, y, guess)
+		self.assertEqual(test.getCell(x, y).getAnswer(), guess, "failed to submit random answer at (" + str(x) + ", " + str(y) + ")")
+		print(test.unsolved_)
+
+		# Clear the previous guess
+		test.clearAnswer(x, y)
+		self.assertEqual(test.getCell(x, y).getAnswer(), None, "failed to clear answer at (" + str(x) + ", " + str(y) + ")")
+		print(test.unsolved_)
+
 if __name__ == "__main__":
 	unittest.main(verbosity = 2)

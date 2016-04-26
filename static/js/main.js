@@ -1,7 +1,7 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
-		
-	if (value != "") {
+
+	if(value != ""){
 		$.ajax({
 			type: "POST",
 			url: "/update",
@@ -23,7 +23,7 @@ function updateCellValue(cell_id, value) {
 				console.log(error)
 			}
 		});
-	};
+	}
 };
 
 function checkStatus() {
@@ -78,14 +78,32 @@ $(document).ready(function() {
 			$(this).attr("style", "background-color:#FFFFFF");
 	});
 
+	$("input.cell").keypress(function(e){
+		if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
+			e.preventDefault();
+	});
+
+	$("input.cell").keydown(function(e){
+		if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
+			e.preventDefault();
+	});
+		
 	$("input.cell").keyup(function(e){
+		e.preventDefault();
 		var cell = $(this);
 
 		if(!cell.attr("immutable")){
-			var answer = e.keyCode - 48;
-			if(0 < answer && answer < 10){
+			var answer = e.keyCode;
+			if(48 < answer && answer < 58){
+				answer -= 48;
 				cell.val(answer);
 				updateCellValue(cell.attr("id"), answer);
+			}
+			else if(answer == 8 || answer == 32 || answer == 46){
+				if(cell.val() != ""){
+					cell.val("");
+					updateCellValue(cell.attr("id"), "clear");
+				}
 			}
 		}
 	});

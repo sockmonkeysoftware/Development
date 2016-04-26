@@ -146,15 +146,33 @@ class Board:
 	# returns True if the user's guess was correct.
 	#--------------------------------------------------------
 	def submitAnswer(self, x, y, answer):
-		if x not in range(9) or y not in range(9) or answer not in range(1, 10):
+		if x not in range(9) or y not in range(9) or (answer not in range(1, 10) and answer is not None):
 			return None
 		else:
-			self.unsolved_ -= 1
+			if self.board_[y][x].getAnswer() is None:
+				self.unsolved_ -= 1
 			oldStatus = self.board_[y][x].isCorrect()
 			correct = self.board_[y][x].submitAnswer(answer)
 			
 			self.incorrect_ += oldStatus - correct
 			return correct
+
+	#--------------------------------------------------------
+	# - Clear Answer in Cell
+	#--------------------------------------------------------
+	# * x : the column or x-coordinate, from left to right
+	# * y : the row or y-cooridnate, from top to bottom
+	# sets the cell's given answer to None, and	
+	# increments the number of cells yet to be solved.
+	# returns None.
+	#--------------------------------------------------------
+	def clearAnswer(self, x, y):
+		if x in range(9) and y in range(9):
+			self.unsolved_ += 1
+			self.board_[y][x].submitAnswer(None)
+			self.incorrect_ += 1
+
+			return None
 	
 	#--------------------------------------------------------
 	# - Is This Row Correctly Solved?
