@@ -27,19 +27,16 @@
 			<tr>
 			%for x in range(9):
 				%id = chr(ord('a')+y) + str(x+1)
-					%if x % 3 == 0 and y % 3 == 0:
+					%if x % 3 == 0 and y % 3 == 0 :
 						<td class="vert-hor-3 content">
-					%elif x % 8 == 0  and y % 3 == 0 and y != 8:
-						<td class="vert-hor-8 content">
-					%elif x % 3 == 0 and y % 3 != 0 and y != 8:
+					%elif x % 3 == 0 and y % 3 != 0 :
 						<td class="vert-3 content">
 					%elif x % 3 != 0 and y % 3 == 0 :
 						<td class="hor-3 content">
-
+					%elif x % 8 == 0 and y % 8 == 0 :
+						<td class="vert-hor-8 content">
 					%elif x % 8 == 0 and y % 8 != 0 :
 						<td class="vert-8 content">
-					%elif x % 8 != 0 and y % 8 == 0 and x % 3 == 0:
-						<td class="hor-3-bot content">
 					%elif x % 8 != 0 and y % 8 == 0 :
 						<td class="hor-8 content">
 					%else:
@@ -47,15 +44,15 @@
 					%end
 
 					<input class="cell" readonly
-
+					
 					%if (id in board):
 						value={{board[id][0]}}
-
+						
 						%if (board[id][1] == False):
 							style="background-color:black"
 							immutable="immutable"
 						%end
-
+		
 					%else:
 						value=""
 					%end
@@ -96,7 +93,7 @@
 		};
 
 		function validateInput(event) {
-			if ((event.charCode >= 49 && event.charCode <= 57) || event.charCode == 8 || event.charCode == 32 || event.charCode == 46) {
+			if (event.charCode >= 49 && event.charCode <= 57) {
 				document.getElementById('userMessage').innerHTML = ""
 				return true;
 			} else {
@@ -108,7 +105,7 @@
 		function win() {
 			document.getElementById('winMessage').innerHTML = "You win!"
 		};
-
+		
 	</script>
 
 	<script type="text/javascript">

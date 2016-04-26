@@ -72,6 +72,17 @@ td .content {
 	border-bottom:1px solid gray;
 }
 
+#sudoku-grid .hor-3-bot {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:3px solid gray;
+	border-right:1px solid gray;
+	border-top: 1px solid gray;
+	border-bottom:3px solid gray;
+}
+
 #sudoku-grid .hor-8 {
 	text-align:center;
 	vertical-align:middle;
@@ -217,6 +228,17 @@ h1 {
 	border-right:9px solid gray;
 	border-top:9px solid gray;
 	border-bottom:3px solid gray;
+}
+
+#sudoku-grid .hor-3-bot {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:9px solid gray;
+	border-right:3px solid gray;
+	border-top: 3px solid gray;
+	border-bottom:9px solid gray;
 }
 
 #sudoku-grid td {
