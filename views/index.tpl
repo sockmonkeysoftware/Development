@@ -6,86 +6,102 @@
 		<meta name="viewport" content="width=device-width" />
 		<!-- Bootstrap core CSS  -->
 		<link href="../css/bootstrap.min.css" rel="stylesheet" />
-		<!--  Light Bootstrap Table core CSS -->
-		<link href="../css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 		<!-- Custom CSS  -->
 		<link href="../css/style.css" rel="stylesheet" />
 		<!--  Fonts and icons  -->
+		<link href="../css/pe-icon-7-stroke.css" rel="stylesheet" />
+
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-		<link href="../css/pe-icon-7-stroke.css" rel="stylesheet" />
+
 		<title>Sock Monkey Sudoku</title>
+
 	</head>
-	<body>
-		<center>
-		<h1>SOCK MONKEY SUDOKU</h1><hr /><br />
+<body>
+	<div class="wrapper">
+		<nav class="navbar navbar-default navbar-fixed" style="margin-bottom:-40px">
+      <div class="container-fluid">
+        <div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+					</button>
 
-		<div class="table-responsive" id="sudoku-grid">
-			<table>
-		<!--  Header -->
-		%for y in range(9):
-			<tr>
-			%for x in range(9):
-				%id = chr(ord('a')+y) + str(x+1)
-					%if x % 3 == 0 and y % 3 == 0:
-						<td class="vert-hor-3 content">
-					%elif x % 8 == 0  and y % 3 == 0 and y != 8:
-						<td class="vert-hor-8 content">
-					%elif x % 3 == 0 and y % 3 != 0 and y != 8:
-						<td class="vert-3 content">
-					%elif x % 3 != 0 and y % 3 == 0 :
-						<td class="hor-3 content">
+          <a class="navbar-brand" href="#" style="padding-top:0px"><img src="/img/sock_monkey_logo.png" class="sm-img"></a>
+        </div>
+				<div class="collapse navbar-collapse" id="collapse">
+          <ul class="nav navbar-nav navbar-right">
+						<li>
+              <a href="#about">
+                About Us
+              </a>
+            </li>
+						<li>
+              <a target="_blank" href="https://www.alz.org/living_with_alzheimers_4521.asp">
+                Learn More
+              </a>
+            </li>
+            <li>
+              <a target="_blank" href="https://www.alz.org/join_the_cause_donate.asp">
+                Donate to the Cause
+              </a>
+            </li>
+          </ul>
+				</div>
+      </div>
+    </nav>
 
-					%elif x % 8 == 0 and y % 8 != 0 :
-						<td class="vert-8 content">
-					%elif x % 8 != 0 and y % 8 == 0 and x % 3 == 0:
-						<td class="hor-3-bot content">
-					%elif x % 8 != 0 and y % 8 == 0 :
-						<td class="hor-8 content">
-					%else:
-						<td class="content">
-					%end
+    <div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-9 col-md-9 col-sm-9 top-row" style="background-color:#CDC8C4">
+							<div class="center" id="sudoku-grid" style="margin-top:40px">
+								% include('sudoku_board.tpl', board=board)
+							</div>
+							<span><h2 style="text-align:center" id='userMessage' style="color:black;"></h2></span>
+							<span><h1 style="text-align:center" id='winMessage' style="color:black;"></h1></span>
 
-					<input class="cell" readonly
+							<form style="text-align:center" role="form" method="post" onsubmit="return false;">
+								<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
+								<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
+							</form>
+          </div> <!-- Board Column -->
 
-					%if (id in board):
-						value={{board[id][0]}}
+					<div class="col-lg-3 col-md-3 col-sm-3 text-center top-row" style="background-color:black">
+						<h1><span style="color:white">Facts Here</span></h1>
+					</div>
+				</div>
 
-						%if (board[id][1] == False):
-							style="background-color:black"
-							immutable="immutable"
-						%end
+				<div class="row" class="about-div">
+					<div class="col-lg-16 col-md-16 col-sm-16 cent-vert" style="background-color:black; height:50vh">
+						<center>
+							<h1><span style="color:white">Stuff About Us</span></h1>
+						</center>
+					</div>
+				</div>
 
-					%else:
-						value=""
-					%end
+				<div class="row">
+					<div class="col-lg-16 col-md-16 col-sm-16 stats-div cent-vert" style="height:50vh">
+						<h1><span style="color:white">Fancy photo with statistics overlay?</span></h1>
+					</div>
+				</div>
 
-					name={{id}}
-					id={{id}}
-					maxlength="1" size="1"
-					onkeypress="return validateInput(event)"
-					/>
-					</div></td>
-			%end
-			<tr>
-		%end
-		</table>
-		</div>
-
-		<span><h2 id='userMessage' style="color:black;"></h2></span>
-		<span><h1 id='winMessage' style="color:black;"></h1></span>
+				<div class="row">
+					<div class="col-lg-16 col-md-16 col-sm-16 cent-vert" style="background-color:black; height:50vh">
+						<h1><span style="color:white">More stuff about us maybe</span></h1>
+					</div>
+				</div>
+			</div>
+    </div> <!-- Content -->
+  </div> <!-- Wrapper -->
 
 
-		<form role="form" method="post" onsubmit="return false;">
-			<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
-			<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
-		</form>
+	<!--   Core JS Files   -->
+	<script src="../js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
 
-		</center>
-		<!--   Core JS Files   -->
-		<script src="../js/jquery-1.10.2.js" type="text/javascript"></script>
-		<script src="../js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="../js/light-bootstrap-dashboard.js"></script>
 	</body>
 
 	<script type="text/javascript" src="../js/main.js"></script>

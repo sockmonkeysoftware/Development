@@ -1,10 +1,29 @@
+.cent-vert {
+    height: 90%;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-div {
+  background-image: url('../img/elderly-image.jpg');
+  background-size:cover;
+}
+
+.center {
+    margin-left:auto;
+    margin-right:auto;
+  }
+
 body {
 	background-color:#fff;
 }
 
-h1 {
+h2 {
+  font-family: sans-serif;
 	color:black;
-	font-size: 30px;
+	font-size: 12px;
 }
 
 .container {
@@ -16,6 +35,9 @@ h1 {
 table {
 	max-width: 50%;
 	min-width: 30%;
+	text-align:center;
+  margin-left:auto;
+  margin-right:auto;
 }
 td {
 	width: 10%;
@@ -33,6 +55,14 @@ td .content {
 	left: 0;
 	right: 0;
 	background: gold;
+}
+
+.sm-img {
+  width:250px
+}
+
+.top-row {
+  height:55vh;
 }
 
 /* --------------------------------------------------------------------------------
@@ -149,15 +179,16 @@ td .content {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 @media (min-width: 550px) {
 
-h1 {
+h2 {
+  font-family: sans-serif;
 	color:black;
-	font-size: 60px;
+	font-size: 20px;
 }
 
 #sudoku-grid input {
 	float: left;
 	padding: 0;
-	width:60px; height:60px;
+	width:50px; height:50px;
 	text-align:center;
 	vertical-align:middle;
 	font-size: 30pt;
@@ -252,17 +283,58 @@ h1 {
 	border-bottom:3px solid gray;
 }
 
-#sudoku-grid input {
-	float: left;
-	padding: 0;
-	width:75px; height:75px;
-	text-align:center;
-	vertical-align:middle;
-	font-size: 30pt;
-	-webkit-border-radius:0px;
-}
-
 .cell {
 	border-style:none;
 	color:#828A96;
+}
+
+table .center{
+	margin-left: auto;
+  margin-right: auto;
+	width: 100%;
+}
+
+.center {
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+table {
+	text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+  width:100px;
+}
+
+.sm-img {
+  width:300px
+}
+
+.top-row {
+  height:90vh;
+}
+.stats-div {
+  background-image: url('../img/elderly-image.jpg');
+  background-size:cover;
+}
+.cent-vert {
+    height: 90%;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+}
+
+.navbar-inner {
+    min-height: 80px;
+}
+
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 60px;
+    min-height: 80px;
+    max-height: 80px;
+    height: 80px;
+    padding-top: 0;
 }
