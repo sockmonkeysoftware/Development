@@ -122,4 +122,5 @@ $(document).ready(function() {
 		if(!cell.attr("immutable"))
 			$(this).attr("style", "background-color:#FFFFFF");
 	});
+
 });

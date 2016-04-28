@@ -41,6 +41,7 @@
 				name={{id}}
 				id={{id}}
 				maxlength="1" size="1"
+				onchange="updateCellValue(this.id, this.value)"
 				onkeypress="return validateInput(event)"/>
 				</div></td>
 		%end
