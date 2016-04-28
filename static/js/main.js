@@ -1,7 +1,7 @@
 function updateCellValue(cell_id, value) {
 	console.log("updateCellValue() Called!")
 
-	if(value == ")
+	if(value == "")
 		value = "clear";
 
 	$.ajax({
