@@ -58,7 +58,7 @@
 			<div class="container-fluid">
 				<div class="row" style="display:flex">
 					<div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
-						<div class="row" style="background-color:#CDC8C4;">
+						<div class="row" style="background-color:#CDC8C4; padding-bottom:24px;">
 							<div class="center" id="sudoku-grid" style="padding-top:24px;">
 								% include('sudoku_board.tpl', board=board)
 							</div>
