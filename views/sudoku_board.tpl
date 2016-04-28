@@ -23,12 +23,13 @@
 					<td class="content">
 				%end
 
-				<input class="cell center" readonly
+				<input type="tel" class="cell center"
 
 				%if (id in board):
 					value={{board[id][0]}}
 
 					%if (board[id][1] == False):
+						readonly
 						style="background-color:black"
 						immutable="immutable"
 					%end

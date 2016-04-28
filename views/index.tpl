@@ -19,7 +19,8 @@
 	</head>
 <body>
 	<div class="wrapper">
-		<nav class="navbar navbar-default navbar-fixed" style="margin-bottom:-40px">
+<div class="row" style="">
+		<nav class="navbar navbar-default navbar-fixed" style="margin-bottom:0">
       <div class="container-fluid">
         <div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
@@ -52,12 +53,13 @@
 				</div>
       </div>
     </nav>
-
+</div>
     <div class="content">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-9 col-md-9 col-sm-9 top-row" style="background-color:#CDC8C4">
-							<div class="center" id="sudoku-grid" style="margin-top:40px">
+				<div class="row" style="display:flex">
+					<div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
+						<div class="row" style="background-color:#CDC8C4;">
+							<div class="center" id="sudoku-grid" style="padding-top:24px;">
 								% include('sudoku_board.tpl', board=board)
 							</div>
 							<span><h2 style="text-align:center" id='userMessage' style="color:black;"></h2></span>
@@ -67,30 +69,33 @@
 								<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
 								<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
 							</form>
-          </div> <!-- Board Column -->
+				      		</div> <!-- Board Row -->
 
-					<div class="col-lg-3 col-md-3 col-sm-3 text-center top-row" style="background-color:black">
-						<h1><span style="color:white">Facts Here</span></h1>
+						<div class="row" style="background-color:black;">
+							<center>
+								<h1><span style="color:white;">Stuff About Us</span></h1>
+							</center>
+						</div>
+						<div class="row stats-div" style="">
+							<center>
+								<h1><span style="color:white">Fancy photo with statistics overlay?</span></h1>
+							</center>
+						</div>
+
+						<div class="row" style="background-color:black;">
+							<center>
+								<h1><span style="color:white">More stuff about us maybe</span></h1>
+							</center>
+						</div>
 					</div>
-				</div>
 
-				<div class="row" class="about-div">
-					<div class="col-lg-16 col-md-16 col-sm-16 cent-vert" style="background-color:black; height:50vh">
-						<center>
-							<h1><span style="color:white">Stuff About Us</span></h1>
-						</center>
-					</div>
-				</div>
 
-				<div class="row">
-					<div class="col-lg-16 col-md-16 col-sm-16 stats-div cent-vert" style="height:50vh">
-						<h1><span style="color:white">Fancy photo with statistics overlay?</span></h1>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-lg-16 col-md-16 col-sm-16 cent-vert" style="background-color:black; height:50vh">
-						<h1><span style="color:white">More stuff about us maybe</span></h1>
+					<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 text-center" style="background-color:black;">
+						<div class="row" style="">
+							<center>
+								<h1><span style="color:white">Facts Here</span></h1>
+							</center>
+						</div>
 					</div>
 				</div>
 			</div>

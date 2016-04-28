@@ -64,6 +64,51 @@ function checkStatus() {
 
 
 $(document).ready(function() {
+	// If a touch device is not being used, allow divs to be manipulated
+	// by click-and-type rather than text box style input
+	if(!('ontouchstart' in document.documentElement)){
+
+		// Make the input read-only to override textbox functionality
+		$("input.cell").each(function(){
+			var cell = $(this);
+			if(!cell.attr("immutable"))
+				cell.attr("readonly", "readonly");
+		});
+
+
+		$("input.cell").keypress(function(e){
+			if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
+				e.preventDefault();
+		});
+
+		$("input.cell").keydown(function(e){
+			if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
+				e.preventDefault();
+		});
+		
+		$("input.cell").keyup(function(e){
+			e.preventDefault();
+			var cell = $(this);
+
+			if(!cell.attr("immutable")){
+				var answer = e.keyCode;
+				if(48 < answer && answer < 58){
+					answer -= 48;
+					cell.val(answer);
+					updateCellValue(cell.attr("id"), answer);
+				}
+				else if(answer == 8 || answer == 32 || answer == 46){
+					if(cell.val() != ""){
+						cell.val("");
+						updateCellValue(cell.attr("id"), "clear");
+					}
+				}
+			}
+		});
+
+	}
+
+
 	$("input.cell").focus(function(e){
 		var cell = $(this);
 
@@ -76,35 +121,5 @@ $(document).ready(function() {
 
 		if(!cell.attr("immutable"))
 			$(this).attr("style", "background-color:#FFFFFF");
-	});
-
-	$("input.cell").keypress(function(e){
-		if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
-			e.preventDefault();
-	});
-
-	$("input.cell").keydown(function(e){
-		if(e.keyCode == 8 || e.keyCode == 32 || e.keyCode == 46)
-			e.preventDefault();
-	});
-		
-	$("input.cell").keyup(function(e){
-		e.preventDefault();
-		var cell = $(this);
-
-		if(!cell.attr("immutable")){
-			var answer = e.keyCode;
-			if(48 < answer && answer < 58){
-				answer -= 48;
-				cell.val(answer);
-				updateCellValue(cell.attr("id"), answer);
-			}
-			else if(answer == 8 || answer == 32 || answer == 46){
-				if(cell.val() != ""){
-					cell.val("");
-					updateCellValue(cell.attr("id"), "clear");
-				}
-			}
-		}
 	});
 });
