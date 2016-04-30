@@ -71,6 +71,8 @@
 							</form>
 				      		</div> <!-- Board Row -->
 
+
+
 						<div class="row" style="background-color:black;">
 							<center>
 								<h1><span style="color:white;">Stuff About Us</span></h1>
@@ -102,6 +104,36 @@
     </div> <!-- Content -->
   </div> <!-- Wrapper -->
 
+	<div id="winModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<center>
+				<h1 class="modal-title">You Win!</h1>
+			</center>
+		</div>
+		<div class="modal-body">
+			<form action='./end' method="GET" role="form">
+				<div class="form-group">
+				<div class="row" style="margin-bottom:20px;">
+					<div class="col-md-12">
+						<center>
+							“To put it simply--our brain span should match our lifespan.” <br/>
+							- Meryl Comer
+						</center>
+					</div>
+				</div>
+			</div>
+	  </div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-info btn-fill pull-left">Play Again?</button>
+			</form>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Gaze on my victory...</button>
+			</div>
+		</div>
+	</div>
 
 	<!--   Core JS Files   -->
 	<script src="../js/jquery-1.10.2.js" type="text/javascript"></script>
@@ -127,7 +159,7 @@
 		};
 
 		function win() {
-			document.getElementById('winMessage').innerHTML = "You win!"
+			$('#winModal').modal('show');
 		};
 
 	</script>
