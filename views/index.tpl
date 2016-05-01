@@ -59,16 +59,18 @@
 				<div class="row" style="display:flex">
 					<div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
 						<div class="row" style="background-color:#CDC8C4; padding-bottom:24px;">
-							<div class="center" id="sudoku-grid" style="padding-top:24px;">
-								% include('sudoku_board.tpl', board=board)
-							</div>
-							<span><h2 style="text-align:center" id='userMessage' style="color:black;"></h2></span>
-							<span><h1 style="text-align:center" id='winMessage' style="color:black;"></h1></span>
-
-							<form style="text-align:center" role="form" method="post" onsubmit="return false;">
-								<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
-								<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
-							</form>
+							<center>
+								<div id="sudoku-grid" style="padding-top:24px;">
+									% include('sudoku_board.tpl', board=board)
+								</div>
+								<span><h2 style="text-align:center" id='userMessage' style="color:black;"></h2></span>
+								<span><h1 style="text-align:center" id='winMessage' style="color:black;"></h1></span>
+	
+								<form style="text-align:center" role="form" method="post" onsubmit="return false;">
+									<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
+									<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
+								</form>
+							</center>
 				      		</div> <!-- Board Row -->
 					</div>
 
@@ -111,9 +113,9 @@
 				<div class="form-group">
 				<div class="row" style="margin-bottom:20px;">
 					<div class="col-md-12">
-						<center>
+						<span style="text-indent:16px">
 							{{fact}}
-						</center>
+						</span>
 					</div>
 				</div>
 			</div>

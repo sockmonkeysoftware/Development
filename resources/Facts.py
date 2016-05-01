@@ -1,12 +1,28 @@
 facts = [
-	"This game is awesomer.",
-	"Cool such, more cool such.",
-	"Something about a rabbit and a rhino.",
-	"Great points. Touche.",
-	"Folks cannot be used as a negative word."
-	"95% of everything you read is ridiculous.",
-	"Memes make up 50% of all weird thoughts.",
-	"30 out of every 2 people are amazing.",
-	"There are 10 numbers."
+"Alzheimer’s disease is the most common form of dementia. Dementia is a term for memory loss and other problems with thinking skills.",
+"According to the Mayo Clinic, the more education you have, the lower your risk of getting Alzheimer’s disease.",
+"You have lower odds of getting Alzheimer if you learn new things in old age, such as learning a new language, playing musical instruments and interacting with others.",
+"35 million people worldwide have Alzheimer’s disease.",
+"5.4 million Americans are living with Alzheimer’s disease (2016).",
+"Alzheimer’s affects 3.3 million women.",
+"Alzheimer’s disease is the 6th leading cause of death in the United States and the 5th leading cause of death for those aged 65 and older.",
+"In 2013, over 84,000 Americans officially died from Alzheimer’s; in 2015, an estimated 700,000 people will die with Alzheimer’s – meaning they will die after having developed the disease.",
+"Deaths from Alzheimer’s increased 71 percent from 2000 to 2013, while deaths from other major diseases (including heart disease, stroke, breast and prostate cancer, and HIV/AIDS) decreased.",
+"Alzheimer’s is the only cause of death among the top 10 in America that cannot be prevented, cured, or even slowed.",
+"1 in 3 seniors dies with Alzheimer's or another form of dementia.",
+"By 2025, 20 states will see at least 35 percent or greater growth in the number of people with Alzheimer’s.",
+"Someone in the United States develops Alzheimer’s every 66 seconds. In 2050, someone in the United States will develop the disease every 33 seconds.",
+"Most people living with Alzheimer’s disease are not aware of it.",
+"Among individuals diagnosed with the disease, only 33 percent are aware they have it.",
+"Less than half (45 percent) of seniors diagnosed with Alzheimer’s disease or their caregivers are aware of the diagnosis, compared with 90 percent or more of those diagnosed with cancer and cardiovascular disease.",
+"An estimated 800,000 Americans with Alzheimer’s are living alone.",
+"In 2015, the direct costs to American society of caring for those with Alzheimer’s will total an estimated $226 billion, with half of the costs borne by Medicare.",
+"Nearly one in every five Medicare dollars is spent on people with Alzheimer’s and other dementias. In 2050, it will be one in every three dollars.",
+"Average per-person Medicare spending for those with Alzheimer’s and other dementias is three times higher than average per-person spending across all other seniors; Medicaid payments are 19 times higher.",
+"Unless something is done, in 2050, Alzheimer’s will cost over $1.1 trillion. Costs to Medicare will increase over 400 percent to $589 billion.",
+"In 2014, 15.7 million family and friends provided 17.9 billion hours of unpaid care to those with Alzheimer’s and other dementias – care valued at $217.7 billion.",
+"Nearly 60 percent of Alzheimer’s and dementia caregivers rate the emotional stress of caregiving as high or very high; about 40 percent suffer from depression.",
+"Due to the physical and emotional toll of caregiving, Alzheimer’s and dementia caregivers had $9.7 billion in additional health care costs of their own in 2014.",
+"Alzheimer’s is the l6th leading cause of death in Ohio (3798 people)."
 ]
 
