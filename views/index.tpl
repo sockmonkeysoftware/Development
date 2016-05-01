@@ -71,8 +71,6 @@
 							</form>
 				      		</div> <!-- Board Row -->
 
-
-
 						<div class="row" style="background-color:black;">
 							<center>
 								<h1><span style="color:white;">Stuff About Us</span></h1>
@@ -82,6 +80,11 @@
 							<center>
 								<h1><span style="color:white">Fancy photo with statistics overlay?</span></h1>
 							</center>
+							<ul class="stats-list" style="text-indent:10%; text-align:left; color:#FFFFFF">
+							%for statistic in stats:
+								<li>{{statistic}}</li>
+							%end
+							</ul>
 						</div>
 
 						<div class="row" style="background-color:black;">
@@ -97,7 +100,13 @@
 							<center>
 								<h1><span style="color:white">Facts Here</span></h1>
 							</center>
+							<ul class="facts-list" style="text-indent:10%; text-align:left; color:#FFFFFF">
+							%for fact in facts:
+								<li>{{fact}}</li>
+							%end
+							</ul>
 						</div>
+
 					</div>
 				</div>
 			</div>

@@ -1,10 +1,12 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../Model")
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../../resources")
 
 from bottle import run, route, view, app
 from bottle import request, redirect, template, response
 from bottle import static_file, error, debug
 from Board import Board
+import Facts
 from functools import wraps
 import json
 
@@ -46,9 +48,9 @@ def play(game_board=None):
 				board_map[id] = (raw_map[y][x], isMutable)
 	
 	sess = request.environ.get('beaker.session')
-	sess['game_board'] = game_board
+	sess['game_board'] = game_board	
 
-	return template('index', board=board_map)
+	return template('index', board=board_map, facts=Facts.facts, stats=Facts.statistics)
 
 #----------------------------------------------------------------
 def resume():
@@ -155,3 +157,5 @@ def status():
 		# return 200 Success
 		response.headers['Content-Type'] = 'application/json'
 		return json.dumps({'status': status, 'status_map': status_map})
+
+
