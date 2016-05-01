@@ -7,6 +7,7 @@ from bottle import request, redirect, template, response
 from bottle import static_file, error, debug
 from Board import Board
 import Facts
+import random
 from functools import wraps
 import json
 
@@ -50,7 +51,7 @@ def play(game_board=None):
 	sess = request.environ.get('beaker.session')
 	sess['game_board'] = game_board	
 
-	return template('index', board=board_map, facts=Facts.facts, stats=Facts.statistics)
+	return template('index', board=board_map, fact=random.choice(Facts.facts))
 
 #----------------------------------------------------------------
 def resume():
@@ -157,5 +158,3 @@ def status():
 		# return 200 Success
 		response.headers['Content-Type'] = 'application/json'
 		return json.dumps({'status': status, 'status_map': status_map})
-
-

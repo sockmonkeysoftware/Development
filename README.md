@@ -21,6 +21,7 @@ Sock Monkey Sudoku Web App
 		- Add records:
 			- URL: '/css/', Directory: '/home/pa-username/Sudoku/Development/static/css/'
 			- URL: '/js/', Directory: '/home/pa-username/Sudoku/Development/static/js/'
+			- URL: '/img/', Directory: '/home/pa-username/Sudoku/Development/static/img/'
 			- (Note: replace _pa-username_ with your own)
 	- Install necessary modules:
 		- pip3 install --user beaker
