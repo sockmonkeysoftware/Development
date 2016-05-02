@@ -76,21 +76,39 @@
 
 
 					<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 text-center" style="background-color:black;">
-						<div class="row" style="background-color:black;">
-							<center>
-								<h1><span style="color:white;">Stuff About Us</span></h1>
-							</center>
-						</div>
 						<div class="row stats-div" style="">
 							<center>
-								<h1><span style="color:white">Fancy photo with statistics overlay?</span></h1>
+								<h1><span style="color:white;">What Is This?</span></h1>
 							</center>
+							<p style="text-align:left; color:white; text-indent:16px; padding-left:8px">
+								Welcome to Sock Monkey Sudoku!<br>
+								We designed this web app to challenge minds across the world;
+								not just to solve puzzles, but to learn a bit about
+								a growing problem in our world, as well: Alzheimer's.<br>
+								There are few who have not heard of this all-to-common form of
+								dementia, but how much do you really know about it?<br>
+								Who is it likely to target? How often and how early can it be caught?
+								Are there any cures or methods of prevention?<br>
+								With each puzzle you solve, you may find answers to these questions and
+								more!<br>
+								We strongly encourage you to visit the Alzheimer's Association's site,
+								and make a donation to aid in the battle against Alzheimer's; every
+								dollar, fact and game counts!
+							</p>
 						</div>
-
 						<div class="row" style="background-color:black;">
 							<center>
-								<h1><span style="color:white">More stuff about us maybe</span></h1>
+								<h1><span style="color:white">Why Sudoku?</span></h1>
 							</center>
+							<p style="text-align:left; color:white; text-indent:16px; padding-left:8px">
+								Sudoku is a timeless mathematical puzzle, and a constant exciting
+								challenge for any mind.<br>
+								Alzheimer's has no cure, but its daunting symptoms can be slowed
+								by active learning and regular brain exercise, such as playing Sudoku.
+								It is our hope that each and every game will help to fight off the symptoms
+								for an Alzheimer's victim, if even just to educate you, the player, as
+								to the on-going struggle around you.
+							</p>
 						</div>
 					</div>
 				</div>
