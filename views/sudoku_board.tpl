@@ -19,6 +19,10 @@
 					<td class="hor-3-bot content">
 				%elif x % 8 != 0 and y % 8 == 0 :
 					<td class="hor-8 content">
+				%elif x == 0 and y == 8:
+					<td class="hor-3-bot content">
+				%elif x == 8 and y == 8:
+					<td class="hor-3-bot-right content">
 				%else:
 					<td class="content">
 				%end

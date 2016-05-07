@@ -12,11 +12,12 @@
 		<link href="../css/pe-icon-7-stroke.css" rel="stylesheet" />
 
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
 		<link rel=”shortcut icon” href=”../img/favicon.ico” type=”image/x-icon” />
 		<title>Sock Monkey Sudoku</title>
 
 	</head>
+	<style>p,h1,h2,h3{font-family: "Roboto", Helvetica, Arial}</style>
 <body>
 	<div class="wrapper">
 <div class="row" style="">
@@ -35,17 +36,17 @@
 				<div class="collapse navbar-collapse" id="collapse">
           <ul class="nav navbar-nav navbar-right">
 						<li>
-              <a href="#about">
+              <a href="#about" style="margin-left:10px">
                 About Us
               </a>
             </li>
 						<li>
-              <a target="_blank" href="https://www.alz.org/living_with_alzheimers_4521.asp">
+              <a target="_blank" href="https://www.alz.org/living_with_alzheimers_4521.asp" style="margin-left:10px">
                 Learn More
               </a>
             </li>
             <li>
-              <a target="_blank" href="https://www.alz.org/join_the_cause_donate.asp">
+              <a target="_blank" href="https://www.alz.org/join_the_cause_donate.asp" style="margin-left:10px">
                 Donate to the Cause
               </a>
             </li>
@@ -56,8 +57,8 @@
 </div>
     <div class="content">
 			<div class="container-fluid">
-				<div class="row" style="display:flex">
-					<div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
+				<div class="row" style="background-color:black;">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-18">
 						<div class="row" style="background-color:#CDC8C4; padding-bottom:24px;">
 							<center>
 								<div id="sudoku-grid" style="padding-top:24px;">
@@ -65,7 +66,7 @@
 								</div>
 								<span><h2 style="text-align:center" id='userMessage' style="color:black;"></h2></span>
 								<span><h1 style="text-align:center" id='winMessage' style="color:black;"></h1></span>
-	
+
 								<form style="text-align:center" role="form" method="post" onsubmit="return false;">
 									<a href="./end" class="confirmation"><button class="btn btn-info btn-fill" type="button">New Game</button></a>
 									<button class="btn btn-info btn-fill" type="submit" onclick="checkStatus()">Check Answers</button>
@@ -75,45 +76,53 @@
 					</div>
 
 
-					<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 text-center" style="background-color:black;">
-						<div class="row stats-div" style="">
-							<center>
-								<h1><span style="color:white;">What Is This?</span></h1>
-							</center>
-							<p style="text-align:left; color:white; text-indent:16px; padding-left:8px">
-								Welcome to Sock Monkey Sudoku!<br>
-								We designed this web app to challenge minds across the world;
-								not just to solve puzzles, but to learn a bit about
-								a growing problem in our world, as well: Alzheimer's.<br>
-								There are few who have not heard of this all-to-common form of
-								dementia, but how much do you really know about it?<br>
-								Who is it likely to target? How often and how early can it be caught?
-								Are there any cures or methods of prevention?<br>
-								With each puzzle you solve, you may find answers to these questions and
-								more!<br>
-								We strongly encourage you to visit the Alzheimer's Association's site,
-								and make a donation to aid in the battle against Alzheimer's; every
-								dollar, fact and game counts!
-							</p>
-						</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 text-center" style="height:100%;">
 						<div class="row" style="background-color:black;">
 							<center>
-								<h1><span style="color:white">Why Sudoku?</span></h1>
+								<h1 style="margin-top:50px"><span style="color:white">What Is This?</span></h1>
 							</center>
-							<p style="text-align:left; color:white; text-indent:16px; padding-left:8px">
+							<div style="margin-right:20%;margin-left:20%">
+								<p style="text-align:left; color:white;padding-left:8px; margin-top:20px; margin-bottom:50px">
+									Welcome to Sock Monkey Sudoku!<br>
+									We designed this web app to challenge minds across the world;
+									not just to solve puzzles, but to learn a bit about
+									a growing problem in our world, as well: Alzheimer's.<br><br>
+									There are few who have not heard of this all-to-common form of
+									dementia, but how much do you really know about it?<br><br>
+									Play now to find out!
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row stats-div" style="height:100%">
+						<center>
+							<h1 style="margin-top:50px"><span style="color:black;">Why Sudoku?</span></h1>
+						</center>
+						<div style="margin-right:20%;margin-left:20%;">
+							<p id="about" style="text-align:left; color:black; padding-left:8px; margin-top:20px; margin-bottom:50px">
 								Sudoku is a timeless mathematical puzzle, and a constant exciting
-								challenge for any mind.<br>
+								challenge for any mind.<br><br>
 								Alzheimer's has no cure, but its daunting symptoms can be slowed
 								by active learning and regular brain exercise, such as playing Sudoku.
 								It is our hope that each and every game will help to fight off the symptoms
 								for an Alzheimer's victim, if even just to educate you, the player, as
-								to the on-going struggle around you.
+								to the on-going struggle around you.<br><br>
+								We strongly encourage you to visit the Alzheimer's Association's site,
+								and make a donation to aid in the battle against Alzheimer's; every
+								dollar given, fact learned and game finished counts!
 							</p>
 						</div>
 					</div>
 				</div>
+				
 			</div>
     </div> <!-- Content -->
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted" style="margin-top:20px">Sock Monkey Sudoku | 2016</p>
+		</div>
+	</footer>
   </div> <!-- Wrapper -->
 
 	<div id="winModal" class="modal fade" role="dialog">

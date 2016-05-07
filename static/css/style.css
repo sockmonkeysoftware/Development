@@ -1,3 +1,11 @@
+footer {
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #f5f5f5;
+}
+
 .cent-vert {
     height: 90%;
     width:100%;
@@ -7,7 +15,7 @@
 }
 
 .stats-div {
-  background-image: url('../img/elderly-image.jpg');
+  background-image: url('../img/elderly-image.png');
   background-size:cover;
 }
 
@@ -109,6 +117,16 @@ td .content {
 
 	border-left:3px solid gray;
 	border-right:1px solid gray;
+	border-top: 1px solid gray;
+	border-bottom:3px solid gray;
+}
+#sudoku-grid .hor-3-bot-right {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:1px solid gray;
+	border-right:3px solid gray;
 	border-top: 1px solid gray;
 	border-bottom:3px solid gray;
 }
@@ -272,6 +290,17 @@ h2 {
 	border-bottom:9px solid gray;
 }
 
+#sudoku-grid .hor-3-bot-right {
+	text-align:center;
+	vertical-align:middle;
+	line-height:1em;
+
+	border-left:3px solid gray;
+	border-right:9px solid gray;
+	border-top: 3px solid gray;
+	border-bottom:9px solid gray;
+}
+
 #sudoku-grid td {
 	text-align:center;
 	vertical-align:middle;
@@ -314,7 +343,7 @@ table {
   height:90vh;
 }
 .stats-div {
-  background-image: url('../img/elderly-image.jpg');
+  background-image: url('../img/elderly-image.png');
   background-size:cover;
 }
 .cent-vert {
