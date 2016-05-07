@@ -20,8 +20,7 @@
 	<style>p,h1,h2,h3{font-family: "Roboto", Helvetica, Arial}</style>
 <body>
 	<div class="wrapper">
-<div class="row" style="">
-		<nav class="navbar navbar-default navbar-fixed" style="margin-bottom:0">
+		<nav class="navbar navbar-default navbar-fixed" style="margin-bottom:0;">
       <div class="container-fluid">
         <div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
@@ -54,11 +53,11 @@
 				</div>
       </div>
     </nav>
-</div>
+
     <div class="content">
 			<div class="container-fluid">
-				<div class="row" style="background-color:black;">
-					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-18">
+				<div class="row" style="background-color:black">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-14">
 						<div class="row" style="background-color:#CDC8C4; padding-bottom:24px;">
 							<center>
 								<div id="sudoku-grid" style="padding-top:24px;">
@@ -118,11 +117,6 @@
 				
 			</div>
     </div> <!-- Content -->
-	<footer class="footer">
-		<div class="container">
-			<p class="text-muted" style="margin-top:20px">Sock Monkey Sudoku | 2016</p>
-		</div>
-	</footer>
   </div> <!-- Wrapper -->
 
 	<div id="winModal" class="modal fade" role="dialog">
